@@ -20,10 +20,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':linkedin-sdk')
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.flaviofaria:kenburnsview:1.0.6'
     compile 'com.android.support:design:23.1.0'
+    //    compile 'com.lorentzos.swipecards:library:1.0.9'
+    //    compile 'com.github.kikoso:SwipeableCards:1.1-RELEASE@aar'
+    compile files('libs/SwipeView-1.0.jar')
+    compile project(':circularImageView')
+    compile project(':libviewpagerindicator')
+    compile 'net.simonvt.menudrawer:menudrawer:3.0+'
 }
