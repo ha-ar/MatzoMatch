@@ -22,7 +22,6 @@ public class CustomPagerAdapter extends PagerAdapter {
     LayoutInflater mLayoutInflater;
     int[] images = {R.drawable.splash_image_1,R.drawable.splash_image_2,R.drawable.splash_image_3};
     ImageView image;
-
     public CustomPagerAdapter(Context context) {
         mContext = context;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
