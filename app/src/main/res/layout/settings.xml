@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,15 +15,42 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Distance"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
+            android:layout_marginTop="14dp"
+            />
 
         <TextView
             android:id="@+id/textView1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight=".8"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="First"
+            android:text="4"
+            android:gravity="end"
             android:textColor="@android:color/black"
             android:textSize="25sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".2"
+            android:layout_height="wrap_content"
+            android:text="km"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
+            android:layout_marginTop="14dp"
+            />
+        </LinearLayout>
 
         <SeekBar
         android:id="@+id/seekBar1"
@@ -29,7 +59,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="26dp"
-        android:max="10"/>
+        android:max="16"/>
 
     </LinearLayout>
 
@@ -43,24 +73,65 @@
         android:layout_marginRight="20dp"
         android:layout_below="@+id/layout_seekbar1"
         >
-
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:weightSum="4"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:layout_marginTop="14dp"
+                />
+
+        <TextView
+            android:id="@+id/distance1"
+            android:layout_width="0dp"
+            android:layout_weight=".4"
+            android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="Second"
+            android:text="18"
             android:textColor="@android:color/black"
             android:textSize="25sp"/>
 
-        <SeekBar
-            android:id="@+id/seekBar2"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight=".2"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:layout_marginTop="14dp"
+                />
+            <TextView
+                android:id="@+id/distance2"
+                android:layout_width="0dp"
+                android:layout_weight=".4"
+                android:layout_height="wrap_content"
+                android:text="58"
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:layout_marginTop="14dp"
+                />
+
+        </LinearLayout>
+
+        <com.appyvet.rangebar.RangeBar
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rangebar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="26dp"
-            android:max="10"/>
+            custom:tickStart="18"
+            custom:tickInterval="1"
+            custom:tickEnd="58"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
     </LinearLayout>
 
@@ -79,8 +150,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
-            android:text="Category:"
+            android:text="Show:"
             android:layout_marginBottom="5dp"
+            android:textColor="@android:color/black"
             />
 
         <Spinner

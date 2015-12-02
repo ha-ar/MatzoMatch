@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#ffffff</color>
-
+    <color name="round_boc">#5B8CB5</color>
 </resources>
+

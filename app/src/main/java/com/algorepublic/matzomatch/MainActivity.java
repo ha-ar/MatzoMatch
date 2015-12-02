@@ -1,26 +1,24 @@
 package com.algorepublic.matzomatch;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.algorepublic.matzomatch.fragments.AppSettings;
+import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
 import com.algorepublic.matzomatch.model.SwipModel;
 import com.androidquery.AQuery;
 
@@ -29,7 +27,7 @@ import net.simonvt.menudrawer.Position;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends BaseActivity
         implements SwipeView.OnCardSwipedListener {
 
 
@@ -43,7 +41,7 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        aq = new AQuery(MainActivity.this);
         mDrawerLeft = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
         mDrawerLeft.setContentView(R.layout.activity_main);
         mDrawerLeft.setMenuView(R.layout.layout_dropdownmenu);
@@ -52,9 +50,35 @@ public class MainActivity extends FragmentActivity
         mDrawerLeft.setDrawerIndicatorEnabled(true);
         mDrawerLeft.setAllowIndicatorAnimation(true);
 
-
+        aq.id(R.id.layout_profile).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDailog();
+            }
+        });
+        aq.id(R.id.layout_explorar).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "http://www.3embed.com");
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this site!");
+                startActivity(Intent.createChooser(intent, "Share"));
+            }
+        });
+        aq.id(R.id.layout_list).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.container,new DiscoveryPreferences()).commit();
+            }
+        });
+        aq.id(R.id.layout_external).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.container, new AppSettings()).commit();
+            }
+        });
         al = new ArrayList<SwipModel>();
-        aq = new AQuery(MainActivity.this);
         contentLayout = (FrameLayout) findViewById(R.id.frame);
 
         populateData();
@@ -150,5 +174,68 @@ public class MainActivity extends FragmentActivity
 
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void showDailog() {
+        // custom dialog
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_popup);
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        TextView report = (TextView) dialog.findViewById(R.id.report_issue);
+        TextView suggestions = (TextView) dialog.findViewById(R.id.make_suggestion);
+        TextView partner = (TextView) dialog.findViewById(R.id.partner_us);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("plain/text");
+                sendIntent.setData(Uri.parse("info@matzoball.com"));
+                sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+                sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@matzoball.com"});
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Report for issues !");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "-----\nModel : Android\nOS Versoin : 5.0.1");
+                startActivity(sendIntent);
+            }
+        });
+        suggestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("plain/text");
+                sendIntent.setData(Uri.parse("info@matzoball.com"));
+                sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+                sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "info@matzoball.com" });
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Make a suggestion");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "-----\n" +
+                        "Model : Android\n" +
+                        "OS Versoin : 5.0.1");
+                startActivity(sendIntent);
+            }
+        });
+        partner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setType("plain/text");
+                sendIntent.setData(Uri.parse("info@matzoball.com"));
+                sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+                sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { "info@matzoball.com" });
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Partner with us");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "-----\n" +
+                        "Model : Android\n" +
+                        "OS Versoin : 5.0.1");
+                startActivity(sendIntent);
+            }
+        });
+        Button close = (Button) dialog.findViewById(R.id.cancel);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+//                 Crouton.makeText(getActivity(), "Book is saved locally", Style.ALERT).show();
+            }
+        });
     }
 }
