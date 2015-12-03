@@ -24,6 +24,7 @@ public class FragmentEventList extends Fragment {
     View view;
     AQuery aq;
     EventService eventService;
+    Arra
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
