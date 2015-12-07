@@ -40,22 +40,22 @@ public class EventsModel {
         public String url;
 
         @SerializedName("name")
-        ArrayList<Name> name = new ArrayList<>();
+        public Name name = new Name();
 
         @SerializedName("description")
-        ArrayList<Description> description = new ArrayList<>();
+        public Description description = new Description();
 
         @SerializedName("logo")
-        ArrayList<Logo> logo = new ArrayList<>();
+        public Logo logo = new Logo();
 
         @SerializedName("start")
-        ArrayList<Start> start = new ArrayList<>();
+        public Start start = new Start();
 
         @SerializedName("end")
-        ArrayList<End> end = new ArrayList<>();
+        public End end = new End();
 
         @SerializedName("venue")
-        ArrayList<Venue> venue = new ArrayList<>();
+        public Venue venue = new Venue();
     }
     public class Name{
         @SerializedName("text")
@@ -96,8 +96,14 @@ public class EventsModel {
         @SerializedName("name")
         public String name;
 
+        @SerializedName("latitude")
+        public String latitude;
+
+        @SerializedName("longitude")
+        public String longitude;
+
         @SerializedName("address")
-        ArrayList<Address> address = new ArrayList<>();
+        public Address address = new Address();
     }
     public class Address{
         @SerializedName("address_1")
@@ -115,11 +121,6 @@ public class EventsModel {
         @SerializedName("country")
         public String country;
 
-        @SerializedName("latitude")
-        public String latitude;
-
-        @SerializedName("longitude")
-        public String longitude;
     }
 
 }

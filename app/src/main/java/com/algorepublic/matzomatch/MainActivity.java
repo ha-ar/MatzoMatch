@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.algorepublic.matzomatch.fragments.AppSettings;
 import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
+import com.algorepublic.matzomatch.fragments.FragmentEventList;
 import com.algorepublic.matzomatch.model.SwipModel;
 import com.androidquery.AQuery;
 
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity
         aq.id(R.id.layout_external).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, new AppSettings()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new AppSettings()).commit();
             }
         });
         al = new ArrayList<SwipModel>();
@@ -98,6 +99,13 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 mSwipeView.likeCard();
+            }
+        });
+
+        aq.id(R.id.button).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.container,new FragmentEventList()).commit();
             }
         });
 

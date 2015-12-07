@@ -68,7 +68,7 @@ public class EventModelDetails {
     public void setVenueAddress(String venueAddress){this.venueAddress = venueAddress;}
     public String getVenueAddress(){return venueAddress;}
 
-    public void setVenueregion(String venueRegion){this.venueRegion = venueRegion;}
+    public void setVenueRegion(String venueRegion){this.venueRegion = venueRegion;}
     public String getVenueRegion(){return venueRegion;}
 
     public void setVenueCity(String venueCity){this.venueCity = venueCity;}

@@ -16,7 +16,7 @@ public class EventService extends BaseService {
     }
 
     public void getEvents(String token,boolean message,CallBack obj){
-        String url = Constants.BASE_URL_EVENTS+"token="+token+"&status=live&order_by=start_asc&expand=venue";
+        String url = Constants.BASE_URL_EVENTS+"?token="+token+"&status=live&order_by=start_asc&expand=venue";
         this.get(url,obj, EventsModel.getInstance(),message);
     }
 }

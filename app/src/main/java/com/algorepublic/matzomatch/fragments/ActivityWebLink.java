@@ -28,9 +28,11 @@ public class ActivityWebLink extends AppCompatActivity {
         link = bundle.getString("Key");
         if ( link.equals("privacy")){
             wv_linker.loadUrl(BaseApplication.privacy);
-        }
+        } else
         if (link.equals("terms")){
             wv_linker.loadUrl(BaseApplication.terms);
+        }else {
+            wv_linker.loadUrl(link);
         }
         aq.id(R.id.layout_arrow).clicked(new View.OnClickListener() {
             @Override
