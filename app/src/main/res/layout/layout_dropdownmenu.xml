@@ -3,163 +3,369 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginBottom="10dp"
+    android:id="@+id/start_matching">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:background="@mipmap/bematched" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        >
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/user_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/profile_sky"
-            app:border_color="#EEEEEE"
-            app:border_width="5dp"
-            app:shadow="true"
-            android:visibility="visible"/>
+        android:layout_height="50dp"
+        android:weightSum="2"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Start Matching"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:id="@+id/List"
+            android:textSize="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Search matching professionals"
+            android:textColor="#ffff"
+            android:layout_weight="1"
+            android:id="@+id/List1"
+            android:layout_marginLeft="10dp"
+            android:textSize="12sp"
+            android:layout_gravity="center_vertical"
+           />
 
     </LinearLayout>
+</LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
+       android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/layout_list"
-        android:layout_height="50dp">
-
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/search_nav"
-            android:id="@+id/home_image" />
-        <TextView
+            android:background="@mipmap/inivitations" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Discovery Preferences"
-            android:textColor="#00a3ca"
-            android:id="@+id/List"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/layout_internal"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/heart"
-            android:id="@+id/internal_image" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="See Who Liked You"
-            android:textColor="#00a3ca"
-            android:id="@+id/internal"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/layout_external"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/settings"
-            android:id="@+id/external_image" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Application Settings"
-            android:textColor="#00a3ca"
-            android:id="@+id/external"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/layout_profile"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/contact"
-            android:id="@+id/category_image" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Conatct Matzomatch"
-            android:textColor="#00a3ca"
-            android:id="@+id/category"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:id="@+id/layout_explorar"
-        android:layout_height="50dp">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/share"
-            android:id="@+id/favorite_image" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Share Matzomatch"
-            android:textColor="#00a3ca"
-            android:id="@+id/Share"
-            android:paddingLeft="20dp"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:background="#88676767"
-        android:layout_height="1dp" />
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:id="@+id/be_matched"
+            android:orientation="vertical">
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Be Matched"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Checkout suggestions"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/my_profile">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/define_urself" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="My Profile"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Define Yourself"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/discovery_preference" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:id="@+id/my_discovery_preference"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Discovery Prefernces"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Set Discovery preference"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/heart_menu" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="See Who Liked You"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="See who liked you!!"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/buy_messages" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:id="@+id/buy_messages"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Buy Messages"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Buy 1000 messages for $0.99"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/app_settings">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/app_settings" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:weightSum="2"
+            android:id="@+id/app_settings"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="App Settings"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Account and more"
+                android:textColor="#ffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp"
+        android:background="@android:color/white"
+        android:layout_height="0.2dp" />
 </LinearLayout>

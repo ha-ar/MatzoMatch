@@ -5,35 +5,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algorepublic.matzomatch.fragments.AppSettings;
+import com.algorepublic.matzomatch.fragments.BaseFragment;
+import com.algorepublic.matzomatch.fragments.BuyMessages;
 import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
-import com.algorepublic.matzomatch.model.SwipModel;
+import com.algorepublic.matzomatch.fragments.MyProfile;
 import com.androidquery.AQuery;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
-import java.util.ArrayList;
-
 public class MainActivity extends BaseActivity
         implements SwipeView.OnCardSwipedListener {
 
 
-    ArrayList<SwipModel> al;
-    private FrameLayout contentLayout;
-    private SwipeView mSwipeView;
+
     private int i;
     AQuery aq;
     MenuDrawer mDrawerLeft;
@@ -49,55 +43,80 @@ public class MainActivity extends BaseActivity
         mDrawerLeft.setSlideDrawable(R.drawable.menu);
         mDrawerLeft.setDrawerIndicatorEnabled(true);
         mDrawerLeft.setAllowIndicatorAnimation(true);
-
-        aq.id(R.id.layout_profile).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDailog();
-            }
-        });
-        aq.id(R.id.layout_explorar).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "http://www.3embed.com");
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this site!");
-                startActivity(Intent.createChooser(intent, "Share"));
-            }
-        });
-        aq.id(R.id.layout_list).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container,new DiscoveryPreferences()).commit();
-            }
-        });
-        aq.id(R.id.layout_external).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, new AppSettings()).commit();
-            }
-        });
-        al = new ArrayList<SwipModel>();
-        contentLayout = (FrameLayout) findViewById(R.id.frame);
-
-        populateData();
-        Log.e("list size", al.size() + "");
-        mSwipeView = new SwipeView(this,R.id.imgSwipeLike, R.id.imgSwipeNope,this);
-        contentLayout.addView(mSwipeView);
-        for (int l =0; l<8 ; l++){
-            addCard(l);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new BaseFragment())
+                    .commit();
         }
-        aq.id(R.id.imgDisLike).clicked(new View.OnClickListener() {
+//   setAllowIndicatorAnimation
+        aq.id(R.id.start_matching).clicked(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mSwipeView.dislikeCard();
+            public void onClick(View v) {
+                mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new BaseFragment())
+                        .commit();
             }
         });
-        aq.id(R.id.imgLike).clicked(new View.OnClickListener() {
+        aq.id(R.id.my_profile).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSwipeView.likeCard();
+                mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction().add(R.id.container,new MyProfile()).commit();
+//                getSupportFragmentManager().beginTransaction().add(R.id.container,new DiscoveryPreferences()).commit();
+            }
+        });
+// aq.id(R.id.layout_profile).clicked(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mDrawerLeft.closeMenu();
+//                showDailog();
+//            }
+//        });
+//        aq.id(R.id.layout_explorar).clicked(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mDrawerLeft.closeMenu();
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_TEXT, "http://www.3embed.com");
+//                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this site!");
+//                startActivity(Intent.createChooser(intent, "Share"));
+//            }
+//        });
+        aq.id(R.id.app_settings).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, AppSettings.newInstence()).commit();
+            }
+        });
+        aq.id(R.id.my_discovery_preference).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+           mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.container, DiscoveryPreferences.newInstance())
+                        .commit();
+            }
+        });
+        aq.id(R.id.my_profile).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.container, MyProfile.newInstance())
+                        .commit();
+            }
+        });
+
+        aq.id(R.id.buy_messages).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDrawerLeft.closeMenu();
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.container, BuyMessages.newInstance())
+                        .commit();
             }
         });
 
@@ -118,45 +137,6 @@ public class MainActivity extends BaseActivity
 
     }
 
-    public void populateData(){
-        SwipModel swipModel = new SwipModel();
-        swipModel.setTitle("c");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("python");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("html");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("java");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("c++");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("css");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-        swipModel.setTitle("java script");
-        swipModel.setDescription("Description goes here");
-        al.add(swipModel);
-    }
-
-    private void addCard(int position) {
-        Log.e("position",position+"");
-        final View cardView = LayoutInflater.from(this).inflate(
-                R.layout.swip_item, null);
-        final ImageView imgBike = (ImageView) cardView
-                .findViewById(R.id.img_main);
-        final TextView title = (TextView) cardView.findViewById(R.id.title);
-        final TextView dis = (TextView) cardView.findViewById(R.id.discription);
-        title.setText(al.get(i).getTitle());
-        dis.setText(al.get(i).getDescription());
-
-        // Add a card to the swipe view.
-        mSwipeView.addCard(cardView, position);
-    }
 
     static void makeToast(Context ctx, String s){
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();

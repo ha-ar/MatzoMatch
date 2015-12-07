@@ -4,8 +4,14 @@
     android:layout_width="match_parent"
     android:background="@android:color/white"
     android:layout_height="match_parent">
-
+    <View
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:id="@+id/view1"
+        android:background="#f1f1f1" />
     <LinearLayout
+        android:layout_below="@+id/view1"
         android:id="@+id/layout_general"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,14 +25,13 @@
             android:text="Need Help? Contact Us"
             android:textColor="@android:color/black"
             android:id="@+id/help"
-            android:textSize="25sp"
+            android:textSize="18sp"
             />
-        <TextView
-            android:layout_marginTop="10dp"
+        <View
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black"
-            />
+            android:background="#f1f1f1" />
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -34,14 +39,13 @@
             android:text="Privacy policy"
             android:textColor="@android:color/black"
             android:id="@+id/privacy"
-            android:textSize="25sp"
+            android:textSize="18sp"
             />
-        <TextView
-            android:layout_marginTop="10dp"
+        <View
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@android:color/black"
-            />
+            android:background="#f1f1f1" />
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
@@ -49,38 +53,49 @@
             android:text="Terms of Services"
             android:textColor="@android:color/black"
             android:id="@+id/terms"
-            android:textSize="25sp"
+            android:textSize="18sp"
             />
-        <TextView
-            android:layout_marginTop="10dp"
+        <View
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black"
-            />
+            android:layout_height="69dp"
+            android:id="@+id/view2"
+            android:background="#f1f1f1" />
+
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
+            android:layout_gravity="center"
             android:textColor="@android:color/black"
             android:id="@+id/logout"
-            android:textSize="25sp"
+            android:textSize="18sp"
             />
-        <TextView
-            android:layout_marginTop="10dp"
+        <View
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black"
-            />
+            android:layout_height="169dp"
+            android:id="@+id/view3"
+            android:background="#f1f1f1" />
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete Account"
+            android:layout_gravity="center"
             android:textColor="@android:color/black"
             android:id="@+id/delete_account"
-            android:textSize="25sp"
+            android:textSize="18sp"
+            android:layout_marginBottom="5dp"
             />
+        <View
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="69dp"
+
+            android:id="@+id/view4"
+            android:background="#f1f1f1" />
     </LinearLayout>
 
 </RelativeLayout>

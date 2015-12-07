@@ -17,7 +17,9 @@ public class BuyMessages extends Fragment {
 
     View view;
     AQuery aq;
-
+    public static BuyMessages newInstance() {
+        return new BuyMessages();
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
