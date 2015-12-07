@@ -18,6 +18,8 @@ import com.algorepublic.matzomatch.fragments.BaseFragment;
 import com.algorepublic.matzomatch.fragments.BuyMessages;
 import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
 import com.algorepublic.matzomatch.fragments.MyProfile;
+import com.algorepublic.matzomatch.fragments.FragmentEventList;
+
 import com.androidquery.AQuery;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -93,11 +95,13 @@ public class MainActivity extends BaseActivity
         });
         aq.id(R.id.my_discovery_preference).clicked(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
            mDrawerLeft.closeMenu();
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.container, DiscoveryPreferences.newInstance())
                         .commit();
+
             }
         });
         aq.id(R.id.my_profile).clicked(new View.OnClickListener() {
@@ -117,6 +121,13 @@ public class MainActivity extends BaseActivity
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.container, BuyMessages.newInstance())
                         .commit();
+            }
+        });
+
+        aq.id(R.id.button).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.container,new FragmentEventList()).commit();
             }
         });
 

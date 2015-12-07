@@ -52,6 +52,12 @@
                 android:onClick="onClickedView"
                 android:scaleType="center"
                 android:src="@drawable/ic_like" />
+            <Button
+                android:id="@+id/button"
+                android:text="temp"
+                android:layout_width="100dp"
+                android:layout_height="100dp" />
+
         </LinearLayout>
 
     </LinearLayout>
