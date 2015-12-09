@@ -34,7 +34,7 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="0dp"
-            android:layout_weight=".8"
+            android:layout_weight=".7"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="4"
@@ -43,7 +43,7 @@
             android:textSize="25sp"/>
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".2"
+            android:layout_weight=".3"
             android:layout_height="wrap_content"
             android:text="km"
             android:textColor="@android:color/black"
@@ -52,14 +52,17 @@
             />
         </LinearLayout>
 
-        <SeekBar
-        android:id="@+id/seekBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:max="100"/>
+        <com.appyvet.rangebar.RangeBar
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingTop="5dp"
+            custom:rangeBar="false"
+            custom:tickEnd="100"
+            />
 
     </LinearLayout>
 
@@ -69,8 +72,6 @@
         android:orientation="vertical"
         android:id="@+id/layout_seekbar2"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_below="@+id/layout_seekbar1"
         >
         <LinearLayout
@@ -126,7 +127,7 @@
             xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rangebar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             custom:tickStart="18"
             custom:tickInterval="1"
             custom:tickEnd="58"
