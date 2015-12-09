@@ -63,8 +63,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="55dp"
+        >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:weightSum="2"
+            android:layout_marginBottom="5dp"
             android:id="@+id/be_matched"
             android:orientation="vertical">
 
@@ -114,7 +115,7 @@
         android:layout_height="0.2dp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:id="@+id/my_profile">
         <ImageView
             android:layout_width="wrap_content"
@@ -151,7 +152,6 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -165,7 +165,7 @@
         android:layout_height="0.2dp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="55dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,12 +197,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Set Discovery preference"
+                android:text="Set Discovery Preference"
                 android:textColor="#ffff"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -216,7 +215,7 @@
         android:layout_height="0.2dp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="55dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -247,12 +246,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="See who liked you!!"
+                android:text="See who liked you!"
                 android:textColor="#ffff"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -267,7 +265,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="55dp">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -304,7 +302,6 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -318,8 +315,8 @@
         android:layout_height="0.2dp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/app_settings">
+        android:layout_height="55dp"
+        android:id="@+id/app_settings1">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -351,12 +348,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Account and more"
+                android:text="Account's and more"
                 android:textColor="#ffff"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:textSize="12sp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center_vertical"
                 />
 

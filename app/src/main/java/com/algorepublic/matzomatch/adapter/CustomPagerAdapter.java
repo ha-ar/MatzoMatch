@@ -1,7 +1,6 @@
 package com.algorepublic.matzomatch.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     Context mContext;
     AQuery aq;
     LayoutInflater mLayoutInflater;
-    int[] images = {R.drawable.splash_image_1,R.drawable.splash_image_2,R.drawable.splash_image_3};
+    int[] images = {R.drawable.splas1,R.drawable.splash_image_2,R.drawable.splash_image_3};
     ImageView image;
     public CustomPagerAdapter(Context context) {
         mContext = context;

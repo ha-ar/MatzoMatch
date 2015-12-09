@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.algorepublic.matzomatch.R;
 import com.androidquery.AQuery;
@@ -38,6 +39,7 @@ public class MyProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_myprofile,container,false);
         aq = new AQuery(getActivity(), view);
+
         aq.id(R.id.image_1).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +90,8 @@ public class MyProfile extends Fragment {
                 builder.show();
             }
         });
-
+        Button b = (Button)view.findViewById(R.id.man);
+        b.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
         aq.id(R.id.image_2).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

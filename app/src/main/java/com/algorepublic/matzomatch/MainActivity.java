@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +18,8 @@ import com.algorepublic.matzomatch.fragments.AppSettings;
 import com.algorepublic.matzomatch.fragments.BaseFragment;
 import com.algorepublic.matzomatch.fragments.BuyMessages;
 import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
-import com.algorepublic.matzomatch.fragments.MyProfile;
 import com.algorepublic.matzomatch.fragments.FragmentEventList;
-
+import com.algorepublic.matzomatch.fragments.MyProfile;
 import com.androidquery.AQuery;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -27,7 +27,7 @@ import net.simonvt.menudrawer.Position;
 
 public class MainActivity extends BaseActivity
         implements SwipeView.OnCardSwipedListener {
-
+    static RelativeLayout toolbar;
 
 
     private int i;
@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         aq = new AQuery(MainActivity.this);
+        toolbar = (RelativeLayout) findViewById(R.id.toolbar_actionbar);
+
         mDrawerLeft = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
         mDrawerLeft.setContentView(R.layout.activity_main);
         mDrawerLeft.setMenuView(R.layout.layout_dropdownmenu);
@@ -47,16 +49,24 @@ public class MainActivity extends BaseActivity
         mDrawerLeft.setAllowIndicatorAnimation(true);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new BaseFragment())
+                    .replace(R.id.container, BaseFragment.newInstance())
                     .commit();
         }
-//   setAllowIndicatorAnimation
+        aq.id(R.id.toolbar_title).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLeft.openMenu();
+            }
+        });
+
         aq.id(R.id.start_matching).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDrawerLeft.closeMenu();
+                aq.id(R.id.calander).visibility(View.VISIBLE);
+                aq.id(R.id.messages).visibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, new BaseFragment())
+                        .replace(R.id.container, BaseFragment.newInstance())
                         .commit();
             }
         });
@@ -64,32 +74,19 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 mDrawerLeft.closeMenu();
-                getSupportFragmentManager().beginTransaction().add(R.id.container,new MyProfile()).commit();
-//                getSupportFragmentManager().beginTransaction().add(R.id.container,new DiscoveryPreferences()).commit();
+                aq.id(R.id.calander).visibility(View.GONE);
+                aq.id(R.id.messages).visibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, MyProfile.newInstance())
+                        .commit();
             }
         });
-// aq.id(R.id.layout_profile).clicked(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mDrawerLeft.closeMenu();
-//                showDailog();
-//            }
-//        });
-//        aq.id(R.id.layout_explorar).clicked(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mDrawerLeft.closeMenu();
-//                Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_TEXT, "http://www.3embed.com");
-//                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this site!");
-//                startActivity(Intent.createChooser(intent, "Share"));
-//            }
-//        });
-        aq.id(R.id.app_settings).clicked(new View.OnClickListener() {
+
+        aq.id(R.id.app_settings1).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDrawerLeft.closeMenu();
+                aq.id(R.id.calander).visibility(View.GONE);
+                aq.id(R.id.messages).visibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, AppSettings.newInstence()).commit();
             }
         });
@@ -97,33 +94,34 @@ public class MainActivity extends BaseActivity
             @Override
 
             public void onClick(View v) {
-           mDrawerLeft.closeMenu();
+                mDrawerLeft.closeMenu();
+                aq.id(R.id.calander).visibility(View.GONE);
+                aq.id(R.id.messages).visibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.container, DiscoveryPreferences.newInstance())
                         .commit();
 
             }
         });
-        aq.id(R.id.my_profile).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDrawerLeft.closeMenu();
-                getSupportFragmentManager().beginTransaction().
-                        replace(R.id.container, MyProfile.newInstance())
-                        .commit();
-            }
-        });
+
 
         aq.id(R.id.buy_messages).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDrawerLeft.closeMenu();
+                aq.id(R.id.calander).visibility(View.GONE);
+                aq.id(R.id.messages).visibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.container, BuyMessages.newInstance())
                         .commit();
             }
         });
-
+        aq.id(R.id.calander).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().add(R.id.container, new FragmentEventList()).commit();
+            }
+        });
         aq.id(R.id.button).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

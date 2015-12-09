@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.algorepublic.matzomatch.adapter.CustomPagerAdapter;
 import com.androidquery.AQuery;
+import com.linkedin.platform.LISession;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.utils.Scope;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -24,6 +26,9 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
     CustomPagerAdapter adapter;
     MyTimer timer;
     int position;
+
+//    private LIOauthService oAuthService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,17 +43,9 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         circlePageIndicator.setViewPager(pager);
         timer = new MyTimer(3000,3000);
         timer.start();
+
         position=0;
-
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.sign_in:
-                startActivity(new Intent(SplashScreen.this, MainActivity.class));
-                break;
-        }
+        setUpdateState();
     }
 
     private static Scope buildScope() {
@@ -56,8 +53,37 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.sign_in:
+
+//                LISessionManager.getInstance(getApplicationContext()).init(SplashScreen.this, buildScope(), new AuthListener() {
+//                    @Override
+//                    public void onAuthSuccess() {
+////                        Log.e("TAG", "onAuthSuccess");
+                        startActivity(new Intent(SplashScreen.this, MainActivity.class));
+//                        Scope scope =buildScope();
+//
+//                    }
+//
+//                    @Override
+//                    public void onAuthError(LIAuthError error) {
+//                        Log.e("TAG","onAuthError");
+//                        Log.e("Error", error.toString());
+//                        // Handle authentication errors
+//                    }
+//                }, true);
+//                break;
+        }
+    }
+
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e("TAG", "onActivityResult");
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+
     }
 
     public class MyTimer extends CountDownTimer
@@ -83,5 +109,15 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         public void onTick(long millisUntilFinished)
         {
         }
+    }
+
+
+
+    private void setUpdateState() {
+        LISessionManager sessionManager = LISessionManager.getInstance(getApplicationContext());
+        LISession session = sessionManager.getSession();
+        boolean accessTokenValid = session.isValid();
+
+
     }
 }

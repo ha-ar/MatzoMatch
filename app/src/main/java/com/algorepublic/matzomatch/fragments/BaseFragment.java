@@ -48,6 +48,12 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
         for (int l =0; l<8 ; l++){
             addCard(l);
         }
+        aq.id(R.id.button).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.container,FragmentEventList.newInstance()).commit();
+            }
+        });
         aq.id(R.id.imgDisLike).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
