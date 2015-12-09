@@ -1,0 +1,65 @@
+<RelativeLayout
+    android:id="@+id/toolbar_top"
+    android:layout_height="50dp"
+    android:layout_width="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    android:background="#424242"
+    app:theme="@style/ToolBarTheme"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:weightSum="8">
+    <ImageButton
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/menu"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/toolbar_title" />
+    <ImageButton
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/matzo_logo"
+        android:layout_gravity="center"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        />
+    <ImageButton
+        android:id="@+id/calander"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="match_parent"
+        android:background="@mipmap/calendar"
+
+        android:layout_gravity="center" />
+    <ImageButton
+        android:id="@+id/messages"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent"
+        android:background="@mipmap/messages"
+        android:layout_gravity="center"
+        android:layout_marginRight="20dp"
+        />
+</LinearLayout>
+
+
+</RelativeLayout>

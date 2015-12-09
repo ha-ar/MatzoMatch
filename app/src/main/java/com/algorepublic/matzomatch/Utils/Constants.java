@@ -13,4 +13,11 @@ public class Constants {
     public static String BASE_URL_LIKE_DISLIKES = "http://matzoball.org/matzomatch/process.php/inviteAction";
     public static String BASE_URL_PROFILES = "http://matzoball.org/matzomatch/process.php/findMatches";
     public static String DEVICE_ID="deviceId";
+
+    public static final String CONSUMER_KEY = "77q91a6o4acz5a"; //
+    public static final String CONSUMER_SECRET = "Cny8AQBNCca6i6yU";
+    public static final String OAUTH_CALLBACK_SCHEME = "x-oauthflow-linkedin";
+    public static final String OAUTH_CALLBACK_HOST = "litestcalback";
+    public static final String OAUTH_CALLBACK_URL = OAUTH_CALLBACK_SCHEME
+            + "://" + OAUTH_CALLBACK_HOST;
 }
