@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.algorepublic.matzomatch.Utils.Constants;
+import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.algorepublic.matzomatch.fragments.AppSettings;
 import com.algorepublic.matzomatch.fragments.BaseFragment;
 import com.algorepublic.matzomatch.fragments.BuyMessages;
@@ -33,11 +37,13 @@ public class MainActivity extends BaseActivity
     private int i;
     AQuery aq;
     MenuDrawer mDrawerLeft;
+    TinyDB tinyDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         aq = new AQuery(MainActivity.this);
+        tinyDB = new TinyDB(getApplicationContext());
         toolbar = (RelativeLayout) findViewById(R.id.toolbar_actionbar);
 
         mDrawerLeft = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, Position.LEFT, MenuDrawer.MENU_DRAG_CONTENT);
@@ -125,10 +131,14 @@ public class MainActivity extends BaseActivity
         aq.id(R.id.button).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container,new FragmentEventList()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.container, new FragmentEventList()).commit();
             }
         });
 
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        String deciceId = telephonyManager.getDeviceId();
+////        Log.e("device id",deciceId);
+//        tinyDB.putString(Constants.DEVICE_ID,deciceId);
     }
 
     @Override

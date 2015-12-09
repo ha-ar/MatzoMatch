@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class DiscoveryPreferences extends Fragment {
 
-    private SeekBar seekBar, seekBar2;
+    private RangeBar seekBar;
     private TextView textView, textView2,distance1,distance2;
     private Spinner spinner;
     ArrayList<String> list;
@@ -48,7 +48,7 @@ public class DiscoveryPreferences extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.settings, container, false);
 
-        seekBar = (SeekBar) view.findViewById(R.id.seekBar1);
+        seekBar = (RangeBar) view.findViewById(R.id.seekBar1);
         textView = (TextView) view.findViewById(R.id.textView1);
         spinner = (Spinner) view.findViewById(R.id.spinner);
         rangeBar = (RangeBar) view.findViewById(R.id.rangebar);
@@ -56,29 +56,13 @@ public class DiscoveryPreferences extends Fragment {
         distance2 = (TextView) view.findViewById(R.id.distance2);
         textView2 = (TextView) view.findViewById(R.id.textView1);
 
-        textView.setText("Covered: " + seekBar.getProgress() + "/" + seekBar.getMax());
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress = 0;
-
+        seekBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                progress = progresValue;
-                Toast.makeText(getActivity(), "Changing seekbar's progress", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(getActivity(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                textView.setText("Covered: " + progress + "/" + seekBar.getMax());
-                Toast.makeText(getActivity(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+                textView.setText(""+rightPinValue);
             }
         });
 
-        textView2.setText("Covered: " + seekBar.getProgress() + "/" + seekBar.getMax());
         rangeBar.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
@@ -87,11 +71,10 @@ public class DiscoveryPreferences extends Fragment {
             }
         });
 
-
         list = new ArrayList<String>();
-        list.add("list 1");
-        list.add("list 2");
-        list.add("list 3");
+        list.add("Man");
+        list.add("Woman");
+        list.add("Homo");
         dataAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -100,7 +83,6 @@ public class DiscoveryPreferences extends Fragment {
 
         return view;
     }
-
 
     public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 

@@ -25,28 +25,30 @@
 package com.algorepublic.matzomatch;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Handler;
-import android.os.Build.VERSION;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.FrameLayout.LayoutParams;
 
-public class SwipeView extends FrameLayout {
+public class SwipeView
+        extends FrameLayout {
     private View mFocusedView;
     private View mFocusedViewLike;
     private View mFocusedViewNope;
     private int mFocusedViewWidth;
-    private float mPreviousAlpha = 0.0F;
-    private Integer mLikeResource = Integer.valueOf(0);
-    private Integer mNopeResource = Integer.valueOf(0);
-    private static final int MAX_ELEMENTS = 8;
-    private static final long DELAY_SCROLL_RUNNABLE = 1L;
+    private float mPreviousAlpha = 0.0f;
+    private Integer mLikeResource = 0;
+    private Integer mNopeResource = 0;
+    private static final int MAX_ELEMENTS = 3;
+    private static final long DELAY_SCROLL_RUNNABLE = 1;
     private static final int SCROLL_LENGTH = 5;
     private int mScrolledPixelsX;
     private int mScrolledPixelsY;
@@ -58,116 +60,99 @@ public class SwipeView extends FrameLayout {
     private int mScrollLengthY = 5;
     private boolean enableTouchSwipe = true;
     private Context mContext;
-    private SwipeView.ScrollMode mScrollModeX;
-    private SwipeView.ScrollMode mScrollModeY;
-    private SwipeView.ScrollDirection mScrollDirection;
+    private ScrollMode mScrollModeX = ScrollMode.NONE;
+    private ScrollMode mScrollModeY = ScrollMode.NONE;
+    private ScrollDirection mScrollDirection = ScrollDirection.NONE;
     private int[] paddingX;
     private int[] paddingYTop;
     private int[] paddingYBottom;
-    private SwipeView.OnCardSwipedListener mOnCardSwipedListener;
+    private OnCardSwipedListener mOnCardSwipedListener;
     private Handler mScrollHandler;
     private Runnable mScrollRunnable;
-    private final SimpleOnGestureListener simpleOnGestureListener;
+    private final GestureDetector.SimpleOnGestureListener simpleOnGestureListener;
 
-    public SwipeView(Context context, Integer likeResource, Integer nopeResource, SwipeView.OnCardSwipedListener cardSwipeListener) {
+    public SwipeView(Context context, Integer likeResource, Integer nopeResource, OnCardSwipedListener cardSwipeListener) {
         super(context);
-        this.mScrollModeX = SwipeView.ScrollMode.NONE;
-        this.mScrollModeY = SwipeView.ScrollMode.NONE;
-        this.mScrollDirection = SwipeView.ScrollDirection.NONE;
-        this.paddingX = new int[]{0, 10, 20};
-        this.paddingYTop = new int[]{0, 10, 20};
-        this.paddingYBottom = new int[]{20, 10, 0};
+        int[] arrn = new int[3];
+        arrn[1] = 10;
+        arrn[2] = 20;
+        this.paddingX = arrn;
+        int[] arrn2 = new int[3];
+        arrn2[1] = 10;
+        arrn2[2] = 20;
+        this.paddingYTop = arrn2;
+        int[] arrn3 = new int[3];
+        arrn3[0] = 20;
+        arrn3[1] = 10;
+        this.paddingYBottom = arrn3;
         this.mScrollHandler = new Handler();
-        this.mScrollRunnable = new Runnable() {
+        this.mScrollRunnable = new Runnable(){
+
+            @Override
             public void run() {
-                boolean scrollX;
-                boolean scrollY;
-                int scrollX1;
-                int scrollY1;
-                if (SwipeView.this.mScrollDirection == SwipeView.ScrollDirection.OUT) {
-                    if (SwipeView.this.mNeedToScrollX <= 0 && SwipeView.this.mNeedToScrollY <= 0) {
+                if (SwipeView.this.mScrollDirection == ScrollDirection.OUT) {
+                    if (SwipeView.this.mNeedToScrollX > 0 || SwipeView.this.mNeedToScrollY > 0) {
+                        if (SwipeView.this.mNeedToScrollX < SwipeView.this.mScrollLengthX) {
+                            SwipeView.access$4(SwipeView.this, SwipeView.this.mNeedToScrollX);
+                            SwipeView.access$5(SwipeView.this, 0);
+                        } else {
+                            SwipeView swipeView = SwipeView.this;
+                            SwipeView.access$5(swipeView, swipeView.mNeedToScrollX - SwipeView.this.mScrollLengthX);
+                        }
+                        if (SwipeView.this.mNeedToScrollY < SwipeView.this.mScrollLengthY) {
+                            SwipeView.access$7(SwipeView.this, SwipeView.this.mNeedToScrollY);
+                            SwipeView.access$8(SwipeView.this, 0);
+                        } else {
+                            SwipeView swipeView = SwipeView.this;
+                            SwipeView.access$8(swipeView, swipeView.mNeedToScrollY - SwipeView.this.mScrollLengthY);
+                        }
+                        int scrollX = 0;
+                        int scrollY = 0;
+                        scrollX = SwipeView.this.mScrollModeX == ScrollMode.LEFT ? - SwipeView.this.mScrollLengthX : SwipeView.this.mScrollLengthX;
+                        scrollY = SwipeView.this.mScrollModeY == ScrollMode.TOP ? - SwipeView.this.mScrollLengthY : SwipeView.this.mScrollLengthY;
+                        SwipeView.this.mFocusedView.scrollBy(scrollX, scrollY);
+                        SwipeView.this.mScrollHandler.postDelayed(SwipeView.this.mScrollRunnable, 1);
+                    } else {
                         SwipeView.this.mScrollHandler.removeCallbacks(SwipeView.this.mScrollRunnable);
                         SwipeView.this.removeView(SwipeView.this.mFocusedView);
-                        if (SwipeView.this.mScrollModeX == SwipeView.ScrollMode.LEFT) {
+                        if (SwipeView.this.mScrollModeX == ScrollMode.LEFT) {
                             SwipeView.this.mOnCardSwipedListener.onLikes();
-                        } else if (SwipeView.this.mScrollModeX == SwipeView.ScrollMode.RIGHT) {
+                        } else if (SwipeView.this.mScrollModeX == ScrollMode.RIGHT) {
                             SwipeView.this.mOnCardSwipedListener.onDisLikes();
                         }
-
                         SwipeView.this.alignCardsPadding();
-                    } else {
-                        if (SwipeView.this.mNeedToScrollX < SwipeView.this.mScrollLengthX) {
-                            SwipeView.this.mScrollLengthX = SwipeView.this.mNeedToScrollX;
-                            SwipeView.this.mNeedToScrollX = 0;
-                        } else {
-                            SwipeView.this.mNeedToScrollX = SwipeView.this.mNeedToScrollX - SwipeView.this.mScrollLengthX;
-                        }
-
-                        if (SwipeView.this.mNeedToScrollY < SwipeView.this.mScrollLengthY) {
-                            SwipeView.this.mScrollLengthY = SwipeView.this.mNeedToScrollY;
-                            SwipeView.this.mNeedToScrollY = 0;
-                        } else {
-                            SwipeView.this.mNeedToScrollY = SwipeView.this.mNeedToScrollY - SwipeView.this.mScrollLengthY;
-                        }
-
-                        scrollX = false;
-                        scrollY = false;
-                        if (SwipeView.this.mScrollModeX == SwipeView.ScrollMode.LEFT) {
-                            scrollX1 = -SwipeView.this.mScrollLengthX;
-                        } else {
-                            scrollX1 = SwipeView.this.mScrollLengthX;
-                        }
-
-                        if (SwipeView.this.mScrollModeY == SwipeView.ScrollMode.TOP) {
-                            scrollY1 = -SwipeView.this.mScrollLengthY;
-                        } else {
-                            scrollY1 = SwipeView.this.mScrollLengthY;
-                        }
-
-                        SwipeView.this.mFocusedView.scrollBy(scrollX1, scrollY1);
-                        SwipeView.this.mScrollHandler.postDelayed(SwipeView.this.mScrollRunnable, 1L);
                     }
-                } else if (SwipeView.this.mScrollDirection == SwipeView.ScrollDirection.IN) {
-                    if (SwipeView.this.mTotalScrolledX <= 0 && SwipeView.this.mTotalScrolledY <= 0) {
-                        SwipeView.this.mScrollHandler.removeCallbacks(SwipeView.this.mScrollRunnable);
-                        SwipeView.this.mScrollDirection = SwipeView.ScrollDirection.NONE;
-                    } else {
+                } else if (SwipeView.this.mScrollDirection == ScrollDirection.IN) {
+                    if (SwipeView.this.mTotalScrolledX > 0 || SwipeView.this.mTotalScrolledY > 0) {
                         if (SwipeView.this.mTotalScrolledX < SwipeView.this.mScrollLengthX) {
-                            SwipeView.this.mScrollLengthX = SwipeView.this.mTotalScrolledX;
-                            SwipeView.this.mTotalScrolledX = 0;
+                            SwipeView.access$4(SwipeView.this, SwipeView.this.mTotalScrolledX);
+                            SwipeView.access$18(SwipeView.this, 0);
                         } else {
-                            SwipeView.this.mTotalScrolledX = SwipeView.this.mTotalScrolledX - SwipeView.this.mScrollLengthX;
+                            SwipeView swipeView = SwipeView.this;
+                            SwipeView.access$18(swipeView, swipeView.mTotalScrolledX - SwipeView.this.mScrollLengthX);
                         }
-
                         if (SwipeView.this.mTotalScrolledY < SwipeView.this.mScrollLengthY) {
-                            SwipeView.this.mScrollLengthY = SwipeView.this.mTotalScrolledY;
-                            SwipeView.this.mTotalScrolledY = 0;
+                            SwipeView.access$7(SwipeView.this, SwipeView.this.mTotalScrolledY);
+                            SwipeView.access$19(SwipeView.this, 0);
                         } else {
-                            SwipeView.this.mTotalScrolledY = SwipeView.this.mTotalScrolledY - SwipeView.this.mScrollLengthY;
+                            SwipeView swipeView = SwipeView.this;
+                            SwipeView.access$19(swipeView, swipeView.mTotalScrolledY - SwipeView.this.mScrollLengthY);
                         }
-
-                        scrollX = false;
-                        scrollY = false;
-                        if (SwipeView.this.mScrollModeX == SwipeView.ScrollMode.LEFT) {
-                            scrollX1 = SwipeView.this.mScrollLengthX;
-                        } else {
-                            scrollX1 = -SwipeView.this.mScrollLengthX;
-                        }
-
-                        if (SwipeView.this.mScrollModeY == SwipeView.ScrollMode.TOP) {
-                            scrollY1 = -SwipeView.this.mScrollLengthY;
-                        } else {
-                            scrollY1 = SwipeView.this.mScrollLengthY;
-                        }
-
-                        SwipeView.this.mFocusedView.scrollBy(scrollX1, scrollY1);
-                        SwipeView.this.mScrollHandler.postDelayed(SwipeView.this.mScrollRunnable, 1L);
+                        int scrollX = 0;
+                        int scrollY = 0;
+                        scrollX = SwipeView.this.mScrollModeX == ScrollMode.LEFT ? SwipeView.this.mScrollLengthX : - SwipeView.this.mScrollLengthX;
+                        scrollY = SwipeView.this.mScrollModeY == ScrollMode.TOP ? - SwipeView.this.mScrollLengthY : SwipeView.this.mScrollLengthY;
+                        SwipeView.this.mFocusedView.scrollBy(scrollX, scrollY);
+                        SwipeView.this.mScrollHandler.postDelayed(SwipeView.this.mScrollRunnable, 1);
+                    } else {
+                        SwipeView.this.mScrollHandler.removeCallbacks(SwipeView.this.mScrollRunnable);
+                        SwipeView.access$20(SwipeView.this, ScrollDirection.NONE);
                     }
                 }
-
             }
         };
-        this.simpleOnGestureListener = new SimpleOnGestureListener() {
+        this.simpleOnGestureListener = new GestureDetector.SimpleOnGestureListener(){
+
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 SwipeView.this.mOnCardSwipedListener.onSingleTap();
                 return super.onSingleTapConfirmed(e);
@@ -175,23 +160,24 @@ public class SwipeView extends FrameLayout {
 
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
                 if (SwipeView.this.mFocusedView != null) {
-                    SwipeView.this.mScrolledPixelsX = SwipeView.this.mScrolledPixelsX + (int) distanceX;
-                    SwipeView.this.mScrolledPixelsY = SwipeView.this.mScrolledPixelsY + (int) distanceY;
-                    SwipeView.this.mFocusedView.scrollBy((int) distanceX, (int) distanceY);
-                    float alpha = (float) SwipeView.this.mScrolledPixelsX / (float) SwipeView.this.mFocusedViewWidth;
-                    if (alpha > 0.0F) {
-                        SwipeView.this.mFocusedViewNope.setVisibility(View.VISIBLE);
-                        SwipeView.this.mFocusedViewLike.setVisibility(View.GONE);
+                    SwipeView swipeView = SwipeView.this;
+                    SwipeView.access$22(swipeView, swipeView.mScrolledPixelsX + (int)distanceX);
+                    SwipeView swipeView2 = SwipeView.this;
+                    SwipeView.access$24(swipeView2, swipeView2.mScrolledPixelsY + (int)distanceY);
+                    SwipeView.this.mFocusedView.scrollBy((int)distanceX, (int)distanceY);
+                    float alpha = (float)SwipeView.this.mScrolledPixelsX / (float)SwipeView.this.mFocusedViewWidth;
+                    if (alpha > 0.0f) {
+                        SwipeView.this.mFocusedViewNope.setVisibility(VISIBLE);
+                        SwipeView.this.mFocusedViewLike.setVisibility(GONE);
                         SwipeView.setAlpha(SwipeView.this.mFocusedViewNope, SwipeView.this.mPreviousAlpha, alpha);
-                        SwipeView.this.mPreviousAlpha = alpha;
+                        SwipeView.access$29(SwipeView.this, alpha);
                     } else {
-                        SwipeView.this.mFocusedViewNope.setVisibility(View.GONE);
-                        SwipeView.this.mFocusedViewLike.setVisibility(View.VISIBLE);
-                        SwipeView.setAlpha(SwipeView.this.mFocusedViewLike, SwipeView.this.mPreviousAlpha, -alpha);
-                        SwipeView.this.mPreviousAlpha = -alpha;
+                        SwipeView.this.mFocusedViewNope.setVisibility(GONE);
+                        SwipeView.this.mFocusedViewLike.setVisibility(VISIBLE);
+                        SwipeView.setAlpha(SwipeView.this.mFocusedViewLike, SwipeView.this.mPreviousAlpha, - alpha);
+                        SwipeView.access$29(SwipeView.this, - alpha);
                     }
                 }
-
                 return true;
             }
         };
@@ -200,75 +186,73 @@ public class SwipeView extends FrameLayout {
         this.mNopeResource = nopeResource;
         this.mOnCardSwipedListener = cardSwipeListener;
         float density = this.getResources().getDisplayMetrics().density;
-
-        for (int gestureDetector = 0; gestureDetector < this.paddingX.length; ++gestureDetector) {
-            this.paddingX[gestureDetector] = (int) ((float) this.paddingX[gestureDetector] * density);
-            this.paddingYTop[gestureDetector] = (int) ((float) this.paddingYTop[gestureDetector] * density);
-            this.paddingYBottom[gestureDetector] = (int) ((float) this.paddingYBottom[gestureDetector] * density);
+        int i = 0;
+        while (i < this.paddingX.length) {
+            this.paddingX[i] = (int)((float)this.paddingX[i] * density);
+            this.paddingYTop[i] = (int)((float)this.paddingYTop[i] * density);
+            this.paddingYBottom[i] = (int)((float)this.paddingYBottom[i] * density);
+            ++i;
         }
+        final GestureDetector gestureDetector = new GestureDetector(this.mContext, (GestureDetector.OnGestureListener)this.simpleOnGestureListener);
+        this.setOnTouchListener(new View.OnTouchListener(){
 
-        final GestureDetector var7 = new GestureDetector(this.mContext, this.simpleOnGestureListener);
-        this.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if (SwipeView.this.getChildCount() > 0) {
-                    if (SwipeView.this.mScrollDirection != SwipeView.ScrollDirection.NONE) {
+                    if (SwipeView.this.mScrollDirection != ScrollDirection.NONE) {
                         return false;
-                    } else if (!SwipeView.this.enableTouchSwipe) {
-                        return false;
-                    } else {
-                        var7.onTouchEvent(event);
-                        switch (event.getAction()) {
-                            case 0:
-                                if (SwipeView.this.getChildCount() > 0) {
-                                    SwipeView.this.mFocusedView = SwipeView.this.getChildAt(SwipeView.this.getChildCount() - 1);
-                                    SwipeView.this.mFocusedViewLike = SwipeView.this.mFocusedView.findViewById(SwipeView.this.mLikeResource.intValue());
-                                    SwipeView.this.mFocusedViewNope = SwipeView.this.mFocusedView.findViewById(SwipeView.this.mNopeResource.intValue());
-                                    SwipeView.this.mFocusedViewWidth = SwipeView.this.mFocusedView.getWidth();
-                                    SwipeView.this.mFocusedView.setPadding(0,0,0,0);
-                                }
-
-                                SwipeView.this.resetScrollingValues();
-                                break;
-                            case 1:
-                                SwipeView.this.alignCardsPadding();
-                                if (SwipeView.this.mScrolledPixelsX < 0) {
-                                    SwipeView.this.mScrollModeX = SwipeView.ScrollMode.LEFT;
-                                    SwipeView.this.mTotalScrolledX = -SwipeView.this.mScrolledPixelsX;
-                                } else {
-                                    SwipeView.this.mScrollModeX = SwipeView.ScrollMode.RIGHT;
-                                    SwipeView.this.mTotalScrolledX = SwipeView.this.mScrolledPixelsX;
-                                }
-
-                                if (SwipeView.this.mScrolledPixelsY < 0) {
-                                    SwipeView.this.mScrollModeY = SwipeView.ScrollMode.BOTTOM;
-                                    SwipeView.this.mTotalScrolledY = -SwipeView.this.mScrolledPixelsY;
-                                } else {
-                                    SwipeView.this.mScrollModeY = SwipeView.ScrollMode.TOP;
-                                    SwipeView.this.mTotalScrolledY = SwipeView.this.mScrolledPixelsY;
-                                }
-
-                                SwipeView.this.detectSwipe();
-                        }
-
-                        return true;
                     }
-                } else {
-                    return false;
+                    if (!SwipeView.this.enableTouchSwipe) {
+                        return false;
+                    }
+                    gestureDetector.onTouchEvent(event);
+                    switch (event.getAction()) {
+                        case 0: {
+                            if (SwipeView.this.getChildCount() > 0) {
+                                SwipeView.access$31(SwipeView.this, SwipeView.this.getChildAt(SwipeView.this.getChildCount() - 1));
+                                SwipeView.access$33(SwipeView.this, SwipeView.this.mFocusedView.findViewById(SwipeView.this.mLikeResource.intValue()));
+                                SwipeView.access$35(SwipeView.this, SwipeView.this.mFocusedView.findViewById(SwipeView.this.mNopeResource.intValue()));
+                                SwipeView.access$36(SwipeView.this, SwipeView.this.mFocusedView.getWidth());
+                                SwipeView.this.mFocusedView.setPadding(SwipeView.this.paddingX[0], 0, SwipeView.this.paddingX[0], 0);
+                            }
+                            SwipeView.this.resetScrollingValues();
+                            break;
+                        }
+                        case 1: {
+                            SwipeView.this.alignCardsPadding();
+                            if (SwipeView.this.mScrolledPixelsX < 0) {
+                                SwipeView.access$39(SwipeView.this, ScrollMode.LEFT);
+                                SwipeView.access$18(SwipeView.this, - SwipeView.this.mScrolledPixelsX);
+                            } else {
+                                SwipeView.access$39(SwipeView.this, ScrollMode.RIGHT);
+                                SwipeView.access$18(SwipeView.this, SwipeView.this.mScrolledPixelsX);
+                            }
+                            if (SwipeView.this.mScrolledPixelsY < 0) {
+                                SwipeView.access$40(SwipeView.this, ScrollMode.BOTTOM);
+                                SwipeView.access$19(SwipeView.this, - SwipeView.this.mScrolledPixelsY);
+                            } else {
+                                SwipeView.access$40(SwipeView.this, ScrollMode.TOP);
+                                SwipeView.access$19(SwipeView.this, SwipeView.this.mScrolledPixelsY);
+                            }
+                            SwipeView.this.detectSwipe();
+                            break;
+                        }
+                    }
+                    return true;
                 }
+                return false;
             }
         });
     }
 
     public void addCard(View view, int position) {
-        if (this.getChildCount() <= 8 && position < 8) {
+        if (this.getChildCount() <= 3 && position < 3) {
             LinearLayout viewLayout = new LinearLayout(this.mContext);
-            viewLayout.setLayoutParams(new LayoutParams(-1, -1));
-            view.setLayoutParams(new LayoutParams(-1, -1));
+            viewLayout.setLayoutParams((ViewGroup.LayoutParams)new FrameLayout.LayoutParams(-1, -1));
+            view.setLayoutParams((ViewGroup.LayoutParams)new FrameLayout.LayoutParams(-1, -1));
             viewLayout.addView(view);
-            viewLayout.setPadding(5,5,5,5);
-            this.addView(viewLayout, 0);
+            viewLayout.setPadding(this.paddingX[position], this.paddingYTop[position], this.paddingX[position], this.paddingYBottom[position]);
+            this.addView((View)viewLayout, 0);
         }
-
     }
 
     public void removeFocusedCard() {
@@ -278,17 +262,17 @@ public class SwipeView extends FrameLayout {
 
     private void alignCardsPadding() {
         int i = 0;
-
-        for (int j = this.getChildCount() - 1; j >= 0; --j) {
-            this.getChildAt(j).setPadding(5,5,5,5);
+        int j = this.getChildCount() - 1;
+        while (j >= 0) {
+            this.getChildAt(j).setPadding(this.paddingX[i], this.paddingYTop[i], this.paddingX[i], this.paddingYBottom[i]);
             ++i;
+            --j;
         }
-
-        this.mScrollDirection = SwipeView.ScrollDirection.NONE;
+        this.mScrollDirection = ScrollDirection.NONE;
     }
 
     private void resetScrollingValues() {
-        this.mPreviousAlpha = 0.0F;
+        this.mPreviousAlpha = 0.0f;
         this.mNeedToScrollX = 0;
         this.mScrolledPixelsX = 0;
         this.mTotalScrolledX = 0;
@@ -297,8 +281,8 @@ public class SwipeView extends FrameLayout {
         this.mTotalScrolledY = 0;
         this.mScrollLengthX = 5;
         this.mScrollLengthY = 5;
-        this.mScrollModeX = SwipeView.ScrollMode.NONE;
-        this.mScrollModeY = SwipeView.ScrollMode.NONE;
+        this.mScrollModeX = ScrollMode.NONE;
+        this.mScrollModeY = ScrollMode.NONE;
     }
 
     public void resetFocuedView() {
@@ -306,26 +290,24 @@ public class SwipeView extends FrameLayout {
             View mFocusedView = this.getChildAt(this.getChildCount() - 1);
             View mFocusedViewLike = mFocusedView.findViewById(this.mLikeResource.intValue());
             View mFocusedViewNope = mFocusedView.findViewById(this.mNopeResource.intValue());
-            setAlpha(mFocusedViewLike, 0.0F, 0.0F);
-            setAlpha(mFocusedViewNope, 0.0F, 0.0F);
+            SwipeView.setAlpha(mFocusedViewLike, 0.0f, 0.0f);
+            SwipeView.setAlpha(mFocusedViewNope, 0.0f, 0.0f);
             mFocusedView.scrollTo(0, 0);
         }
-
     }
 
     private void detectSwipe() {
         int imageHalf = this.mFocusedView.getWidth() / 2;
         this.mNeedToScrollX = this.mFocusedView.getWidth() - this.mTotalScrolledX;
-        if (this.mScrollDirection == SwipeView.ScrollDirection.NONE) {
+        if (this.mScrollDirection == ScrollDirection.NONE) {
             if (this.mNeedToScrollX < imageHalf) {
-                this.mScrollDirection = SwipeView.ScrollDirection.OUT;
+                this.mScrollDirection = ScrollDirection.OUT;
             } else {
-                this.mScrollDirection = SwipeView.ScrollDirection.IN;
-                setAlpha(this.mFocusedViewLike, 0.0F, 0.0F);
-                setAlpha(this.mFocusedViewNope, 0.0F, 0.0F);
+                this.mScrollDirection = ScrollDirection.IN;
+                SwipeView.setAlpha(this.mFocusedViewLike, 0.0f, 0.0f);
+                SwipeView.setAlpha(this.mFocusedViewNope, 0.0f, 0.0f);
             }
         }
-
         this.mScrollHandler.post(this.mScrollRunnable);
     }
 
@@ -334,18 +316,16 @@ public class SwipeView extends FrameLayout {
             this.mFocusedView = this.getChildAt(this.getChildCount() - 1);
             this.mFocusedViewLike = this.mFocusedView.findViewById(this.mLikeResource.intValue());
             this.mFocusedViewNope = this.mFocusedView.findViewById(this.mNopeResource.intValue());
-            if (this.mScrollDirection != SwipeView.ScrollDirection.NONE) {
+            if (this.mScrollDirection != ScrollDirection.NONE) {
                 return;
             }
-
             this.resetScrollingValues();
-            this.mScrollDirection = SwipeView.ScrollDirection.OUT;
-            this.mScrollModeX = SwipeView.ScrollMode.LEFT;
-            this.mFocusedViewLike.setVisibility(View.VISIBLE);
-            setAlpha(this.mFocusedViewLike, 0.0F, 1.0F);
+            this.mScrollDirection = ScrollDirection.OUT;
+            this.mScrollModeX = ScrollMode.LEFT;
+            this.mFocusedViewLike.setVisibility(VISIBLE);
+            SwipeView.setAlpha(this.mFocusedViewLike, 0.0f, 1.0f);
             this.detectSwipe();
         }
-
     }
 
     public void dislikeCard() {
@@ -353,18 +333,16 @@ public class SwipeView extends FrameLayout {
             this.mFocusedView = this.getChildAt(this.getChildCount() - 1);
             this.mFocusedViewLike = this.mFocusedView.findViewById(this.mLikeResource.intValue());
             this.mFocusedViewNope = this.mFocusedView.findViewById(this.mNopeResource.intValue());
-            if (this.mScrollDirection != SwipeView.ScrollDirection.NONE) {
+            if (this.mScrollDirection != ScrollDirection.NONE) {
                 return;
             }
-
             this.resetScrollingValues();
-            this.mScrollDirection = SwipeView.ScrollDirection.OUT;
-            this.mScrollModeX = SwipeView.ScrollMode.RIGHT;
-            this.mFocusedViewNope.setVisibility(View.VISIBLE);
-            setAlpha(this.mFocusedViewNope, 0.0F, 1.0F);
+            this.mScrollDirection = ScrollDirection.OUT;
+            this.mScrollModeX = ScrollMode.RIGHT;
+            this.mFocusedViewNope.setVisibility(VISIBLE);
+            SwipeView.setAlpha(this.mFocusedViewNope, 0.0f, 1.0f);
             this.detectSwipe();
         }
-
     }
 
     public void setTouchable(boolean touchable) {
@@ -372,16 +350,80 @@ public class SwipeView extends FrameLayout {
     }
 
     public static void setAlpha(View view, float fromAlpha, float toAlpha) {
-        if (VERSION.SDK_INT < 11) {
+        if (Build.VERSION.SDK_INT < 11) {
             AlphaAnimation alphaAnimation = new AlphaAnimation(fromAlpha, toAlpha);
-            alphaAnimation.setDuration(0L);
+            alphaAnimation.setDuration(0);
             alphaAnimation.setFillAfter(true);
-            view.startAnimation(alphaAnimation);
+            view.startAnimation((Animation)alphaAnimation);
         } else {
             view.setAlpha(toAlpha);
         }
-
     }
+
+    static /* synthetic */ void access$4(SwipeView swipeView, int n) {
+        swipeView.mScrollLengthX = n;
+    }
+
+    static /* synthetic */ void access$5(SwipeView swipeView, int n) {
+        swipeView.mNeedToScrollX = n;
+    }
+
+    static /* synthetic */ void access$7(SwipeView swipeView, int n) {
+        swipeView.mScrollLengthY = n;
+    }
+
+    static /* synthetic */ void access$8(SwipeView swipeView, int n) {
+        swipeView.mNeedToScrollY = n;
+    }
+
+    static /* synthetic */ void access$18(SwipeView swipeView, int n) {
+        swipeView.mTotalScrolledX = n;
+    }
+
+    static /* synthetic */ void access$19(SwipeView swipeView, int n) {
+        swipeView.mTotalScrolledY = n;
+    }
+
+    static /* synthetic */ void access$20(SwipeView swipeView, ScrollDirection scrollDirection) {
+        swipeView.mScrollDirection = scrollDirection;
+    }
+
+    static /* synthetic */ void access$22(SwipeView swipeView, int n) {
+        swipeView.mScrolledPixelsX = n;
+    }
+
+    static /* synthetic */ void access$24(SwipeView swipeView, int n) {
+        swipeView.mScrolledPixelsY = n;
+    }
+
+    static /* synthetic */ void access$29(SwipeView swipeView, float f) {
+        swipeView.mPreviousAlpha = f;
+    }
+
+    static /* synthetic */ void access$31(SwipeView swipeView, View view) {
+        swipeView.mFocusedView = view;
+    }
+
+    static /* synthetic */ void access$33(SwipeView swipeView, View view) {
+        swipeView.mFocusedViewLike = view;
+    }
+
+    static /* synthetic */ void access$35(SwipeView swipeView, View view) {
+        swipeView.mFocusedViewNope = view;
+    }
+
+    static /* synthetic */ void access$36(SwipeView swipeView, int n) {
+        swipeView.mFocusedViewWidth = n;
+    }
+
+    static /* synthetic */ void access$39(SwipeView swipeView, ScrollMode scrollMode) {
+        swipeView.mScrollModeX = scrollMode;
+    }
+
+    static /* synthetic */ void access$40(SwipeView swipeView, ScrollMode scrollMode) {
+        swipeView.mScrollModeY = scrollMode;
+    }
+
 
     public interface OnCardSwipedListener {
         void onLikes();
