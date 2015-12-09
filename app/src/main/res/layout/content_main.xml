@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"
+            android:background="@android:color/white"
             android:weightSum="2"
             >
             <ImageView
@@ -37,11 +38,6 @@
                 android:scaleType="center"
                 android:src="@drawable/ic_dislike" />
 
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="3dp"
-                android:layout_height="40dp"
-                android:background="@android:color/darker_gray" />
 
             <ImageView
                 android:id="@+id/imgLike"
