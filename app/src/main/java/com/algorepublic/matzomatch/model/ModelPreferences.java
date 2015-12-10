@@ -1,4 +1,4 @@
-package com.algorepublic.matzomatch.Services;
+package com.algorepublic.matzomatch.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +21,9 @@ public class ModelPreferences {
     }
 
     public void setList(ModelPreferences object){ _obj = object;}
+
+    @SerializedName("errMsg")
+    public String errMsg;
 
     @SerializedName("prSex")
     public String prSex;

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="#ffffff"
     >
     
     <LinearLayout
@@ -11,14 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/layout_seekbar1"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:weightSum="2"
+        android:background="#d6d6d6"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:padding="5dp"
         >
 
         <TextView
@@ -26,9 +27,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Distance"
-            android:textColor="@android:color/black"
-            android:textSize="25dp"
-            android:layout_marginTop="14dp"
+            android:textColor="#727272"
+            android:textSize="17dp"
             />
 
         <TextView
@@ -36,22 +36,26 @@
             android:layout_width="0dp"
             android:layout_weight=".7"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:text="4"
             android:gravity="end"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"/>
+            android:textColor="#727272"
+            android:textSize="17sp"/>
         <TextView
             android:layout_width="0dp"
-            android:layout_weight=".3"
+            android:layout_weight=".19"
             android:layout_height="wrap_content"
             android:text="km"
-            android:textColor="@android:color/black"
-            android:textSize="25dp"
-            android:layout_marginTop="14dp"
+            android:textColor="#727272"
+            android:textSize="17dp"
             />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
         <com.appyvet.rangebar.RangeBar
             xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/seekBar1"
@@ -59,10 +63,16 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            custom:tickColor="@android:color/holo_blue_light"
+            custom:connectingLineColor="@android:color/holo_blue_light"
+            custom:pinColor="@android:color/holo_blue_light"
+            custom:rangeBarColor="@android:color/holo_blue_light"
+            custom:selectorColor="@android:color/holo_blue_light"
             android:paddingTop="5dp"
             custom:rangeBar="false"
-            custom:tickEnd="100"
+            custom:tickEnd="160"
             />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -71,14 +81,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/layout_seekbar2"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/layout_seekbar1"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:weightSum="4"
             android:orientation="horizontal"
+            android:background="#d6d6d6"
+            android:padding="15dp"
+            android:gravity="center"
             >
 
             <TextView
@@ -86,9 +98,8 @@
                 android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:text="Age"
-                android:textColor="@android:color/black"
-                android:textSize="25dp"
-                android:layout_marginTop="14dp"
+                android:textColor="#727272"
+                android:textSize="17sp"
                 />
 
         <TextView
@@ -96,19 +107,17 @@
             android:layout_width="0dp"
             android:layout_weight=".4"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
             android:text="18"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"/>
+            android:textColor="#727272"
+            android:textSize="17sp"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:text="-"
-                android:textColor="@android:color/black"
-                android:textSize="25dp"
-                android:layout_marginTop="14dp"
+                android:textColor="#727272"
+                android:textSize="17sp"
                 />
             <TextView
                 android:id="@+id/distance2"
@@ -116,23 +125,32 @@
                 android:layout_weight=".4"
                 android:layout_height="wrap_content"
                 android:text="58"
-                android:textColor="@android:color/black"
-                android:textSize="25dp"
-                android:layout_marginTop="14dp"
+                android:textColor="#727272"
+                android:textSize="17sp"
                 />
 
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
         <com.appyvet.rangebar.RangeBar
             xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rangebar"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            custom:tickColor="@android:color/holo_blue_light"
+            custom:connectingLineColor="@android:color/holo_blue_light"
+            custom:pinColor="@android:color/holo_blue_light"
+            custom:rangeBarColor="@android:color/holo_blue_light"
+            custom:selectorColor="@android:color/holo_blue_light"
             custom:tickStart="18"
             custom:tickInterval="1"
-            custom:tickEnd="58"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            custom:tickEnd="58"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -141,27 +159,75 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/layout_spinner"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_below="@+id/layout_seekbar2"
         >
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#d6d6d6"
+            />
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="Show:"
-            android:layout_marginBottom="5dp"
-            android:textColor="@android:color/black"
+            android:text="I'm Interested In:"
+            android:textColor="#727272"
+            android:background="#d6d6d6"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#d6d6d6"
             />
 
         <Spinner
+            android:visibility="gone"
             android:id="@+id/spinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:prompt="@string/spinner_title"
             />
+        <Switch
+            android:id="@+id/man"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Man"
+            android:textSize="17sp"
+            android:textColor="#d6d6d6"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            />
+        <Switch
+            android:id="@+id/woman"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Man"
+            android:textSize="17sp"
+            android:textColor="#d6d6d6"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:layout_below="@id/layout_spinner"
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/rectangle_shape"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@android:color/white"
+        android:text="Preview My Profile"
+        android:background="@android:color/holo_blue_bright"
+        />
     </LinearLayout>
 
 </RelativeLayout>

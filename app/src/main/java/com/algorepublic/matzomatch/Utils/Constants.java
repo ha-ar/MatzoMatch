@@ -20,4 +20,10 @@ public class Constants {
     public static final String OAUTH_CALLBACK_HOST = "litestcalback";
     public static final String OAUTH_CALLBACK_URL = OAUTH_CALLBACK_SCHEME
             + "://" + OAUTH_CALLBACK_HOST;
+    // Prefrences
+    public static String UPPER_AGE ="uperAge";
+    public static String LOWER_AGE = "LowerAge";
+    public static String USER_GENDER = "UserGender";
+    public static String PREF_GENDER = "PrefGender";
+    public static String DISTANCE = "Distance";
 }

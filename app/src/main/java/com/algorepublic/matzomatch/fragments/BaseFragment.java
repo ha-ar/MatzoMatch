@@ -12,14 +12,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.algorepublic.matzomatch.R;
 import com.algorepublic.matzomatch.Services.CallBack;
 import com.algorepublic.matzomatch.Services.ProfileServices;
 import com.algorepublic.matzomatch.SwipeView;
+import com.algorepublic.matzomatch.Utils.Constants;
+import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.algorepublic.matzomatch.model.LikesDislikesModel;
 import com.algorepublic.matzomatch.model.MatchModel;
+import com.algorepublic.matzomatch.model.ModelPreferences;
 import com.algorepublic.matzomatch.model.SwipModel;
 import com.androidquery.AQuery;
 import com.skyfishjy.library.RippleBackground;
@@ -45,6 +49,7 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
     public ProfileServices profileServices;
     public ArrayList<MatchModelDetails> arrayList;
     public RelativeLayout relativeLayout;
+    public TinyDB tinyDB;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new BaseFragment();
@@ -58,6 +63,7 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
         aq = new AQuery(getActivity(),view);
         al = new ArrayList<SwipModel>();
         arrayList = new ArrayList<>();
+        tinyDB = new TinyDB(getActivity());
         profileServices = new ProfileServices(getActivity(),view);
         contentLayout = (FrameLayout) view.findViewById(R.id.frame);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.layout_search);
@@ -91,18 +97,18 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
         aq.id(R.id.imgLike).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (arrayList.size() == 0|| arrayList.isEmpty()){
+                if (arrayList.size() == 0 || arrayList.isEmpty()) {
                     return;
                 }
                 mSwipeView.likeCard();
-                if (pos == arrayList.size()-1){
+                if (pos == arrayList.size() - 1) {
                     contentLayout.setVisibility(View.GONE);
                     relativeLayout.setVisibility(View.VISIBLE);
                     return;
                 }
-                profileServices.sendLikesDislikes(arrayList.get(count).getFbId(),"1","8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3"
-                        ,"38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
-                        new CallBack(BaseFragment.this,"like"));
+                profileServices.sendLikesDislikes(arrayList.get(count).getFbId(), "1", "8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3"
+                        , "38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
+                        new CallBack(BaseFragment.this, "like"));
                 count++;
                 pos++;
                 addCard(0);
@@ -111,12 +117,35 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
         profileServices.getMatches("38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
                 "8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3",2, new CallBack(BaseFragment.this,"GetMatches"));
 
+        // hit for discovery prefrences
+        profileServices.getPreferences("8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3",
+                "38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
+                new CallBack(BaseFragment.this,"prefrences"));
+
          return view;
+    }
+
+    public void prefrences(Object caller,Object model){
+        ModelPreferences.getObj().setList((ModelPreferences) model);
+        if (ModelPreferences.getObj().errMsg.equals("Got the settings!")) {
+            populatePrefrences();
+            Log.e("data","populated");
+        }else{
+            Log.e("Something bad Happened","prefrences");
+        }
+    }
+
+    public void populatePrefrences(){
+        tinyDB.putString(Constants.UPPER_AGE,ModelPreferences.getObj().prUAge);
+        tinyDB.putString(Constants.LOWER_AGE,ModelPreferences.getObj().prLAge);
+        tinyDB.putString(Constants.DISTANCE,ModelPreferences.getObj().prRad);
+        tinyDB.putString(Constants.USER_GENDER,ModelPreferences.getObj().sex);
+        tinyDB.putString(Constants.PREF_GENDER,ModelPreferences.getObj().prSex);
     }
 
     public void like(Object caller,Object model){
         LikesDislikesModel.getInstance().setList((LikesDislikesModel) model);
-        if (LikesDislikesModel.getInstance().errMsg == "Like sent!"){
+        if (LikesDislikesModel.getInstance().errMsg.equals("Like sent!")){
             Log.e("Likes","send");
         } else {
             Log.e("something went wrong","");
@@ -126,7 +155,7 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
     public void Dislike(Object caller,Object model){
         LikesDislikesModel.getInstance().setList((LikesDislikesModel)model);
         Log.e("dislike", "yes");
-        if (LikesDislikesModel.getInstance().errMsg == "Like sent!"){
+        if (LikesDislikesModel.getInstance().errMsg.equals("Like sent!")){
             Log.e("Likes","send");
         } else {
             Log.e("something went wrong","");

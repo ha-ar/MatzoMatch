@@ -8,6 +8,7 @@ import android.view.View;
 import com.algorepublic.matzomatch.Utils.Constants;
 import com.algorepublic.matzomatch.model.LikesDislikesModel;
 import com.algorepublic.matzomatch.model.MatchModel;
+import com.algorepublic.matzomatch.model.ModelPreferences;
 
 import java.util.HashMap;
 
@@ -40,13 +41,13 @@ public class ProfileServices extends BaseService {
         this.post(Url,params,obj, MatchModel.getInstaance(),true);
     }
 
-    public void getPreferences(CallBack obj){
+    public void getPreferences(String deviceID,String token,CallBack obj){
         String Url = Constants.BASE_URL+"getPreferences";
         HashMap<String, String> params = new HashMap<>();
-        params.put("ent_dev_id","");
-        params.put("ent_sess_token","");
+        params.put("ent_dev_id",deviceID);
+        params.put("ent_sess_token",token);
         Log.e("Url", Url);
-        this.post(Url, params, obj,ModelPreferences.getObj(),true);
+        this.post(Url, params, obj, ModelPreferences.getObj(),true);
     }
 
     public void updatePreferences(String deviceID,String token,String userGender,String lowerAge,String prefGender,
