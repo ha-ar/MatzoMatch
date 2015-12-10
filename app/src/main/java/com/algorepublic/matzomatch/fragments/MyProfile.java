@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.algorepublic.matzomatch.R;
+import com.algorepublic.matzomatch.Utils.Constants;
+import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.androidquery.AQuery;
 
 import java.io.File;
@@ -26,6 +28,7 @@ public class MyProfile extends Fragment {
     View view;
     static final int ACTION_PICK = 3;
     private AQuery aq;
+    TinyDB tinyDB;
     public static MyProfile newInstance() {
         return new MyProfile();
     }
@@ -39,7 +42,14 @@ public class MyProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_myprofile,container,false);
         aq = new AQuery(getActivity(), view);
+        tinyDB = new TinyDB(getActivity());
+        final Button manB = (Button)view.findViewById(R.id.man);
+        final Button femaleB=(Button)view.findViewById(R.id.women);
+        final Button previewSubmit=(Button)view.findViewById(R.id.preview_profile);
+        previewSubmit.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
 
+        aq.id(R.id.headlines_profile).text(tinyDB.getString(Constants.HeadLine));
+        aq.id(R.id.name_profile).text(tinyDB.getString(Constants.FirstName));
         aq.id(R.id.image_1).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,9 +100,9 @@ public class MyProfile extends Fragment {
                 builder.show();
             }
         });
-        Button b = (Button)view.findViewById(R.id.man);
-        b.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
-        aq.id(R.id.image_2).clicked(new View.OnClickListener() {
+
+
+         aq.id(R.id.image_2).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -292,7 +302,20 @@ public class MyProfile extends Fragment {
                 builder.show();
             }
         });
-
+        manB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manB.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
+                femaleB.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+            }
+        });
+        femaleB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                femaleB.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
+                manB.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+            }
+        });
         return view;
     }
 }

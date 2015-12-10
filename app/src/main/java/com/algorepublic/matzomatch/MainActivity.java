@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -16,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algorepublic.matzomatch.Utils.Constants;
 import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.algorepublic.matzomatch.fragments.AppSettings;
 import com.algorepublic.matzomatch.fragments.BaseFragment;
@@ -128,17 +125,7 @@ public class MainActivity extends BaseActivity
                 getSupportFragmentManager().beginTransaction().add(R.id.container, new FragmentEventList()).commit();
             }
         });
-        aq.id(R.id.button).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, new FragmentEventList()).commit();
-            }
-        });
 
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        String deciceId = telephonyManager.getDeviceId();
-////        Log.e("device id",deciceId);
-//        tinyDB.putString(Constants.DEVICE_ID,deciceId);
     }
 
     @Override

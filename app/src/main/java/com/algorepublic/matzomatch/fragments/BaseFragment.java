@@ -1,7 +1,11 @@
 package com.algorepublic.matzomatch.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,6 +46,7 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
 
     ArrayList<SwipModel> al;
     AQuery aq;
+    static final int ACTION_PICK = 3;
     private int count=0,pos=0;
     private FrameLayout contentLayout;
     private SwipeView mSwipeView;
@@ -76,19 +81,19 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
         aq.id(R.id.imgDisLike).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (arrayList.size() == 0|| arrayList.isEmpty()){
+                if (arrayList.size() == 0 || arrayList.isEmpty()) {
                     return;
                 }
-                Log.e("dislike","yes");
+                Log.e("dislike", "yes");
                 mSwipeView.dislikeCard();
                 if (pos == arrayList.size() - 1) {
                     contentLayout.setVisibility(View.GONE);
                     relativeLayout.setVisibility(View.VISIBLE);
                     return;
                 }
-                profileServices.sendLikesDislikes(arrayList.get(count).getFbId(),"2","8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3"
-                ,"38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
-                        new CallBack(BaseFragment.this,"Dislike"));
+                profileServices.sendLikesDislikes(arrayList.get(count).getFbId(), "2", "8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3"
+                        , "38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
+                        new CallBack(BaseFragment.this, "Dislike"));
                 count++;
                 pos++;
                 addCard(0);
@@ -114,8 +119,61 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
                 addCard(0);
             }
         });
+        aq.id(R.id.shareHome).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final CharSequence[] options = {"Sms", "Email", "Cancel"};
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Choose Action!");
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+
+                    @Override
+
+                    public void onClick(DialogInterface dialog, int item) {
+
+
+                        if (options[item].equals("Sms"))
+
+                        {
+                            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                            sendIntent.setData(Uri.parse("sms:"));
+                            startActivityForResult(sendIntent, 2);
+                            sendIntent.putExtra("sms_body", "");
+
+                        } else if (options[item].equals("Email"))
+
+                        {
+
+                            Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                            sendIntent.setType("plain/text");
+                            sendIntent.setData(Uri.parse("info@matzoball.com"));
+                            sendIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
+                            sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@matzoball.com"});
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Report for issues !");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "-----\nModel : Android\nOS Versoin : 5.0.1");
+                            startActivity(sendIntent);
+
+
+                        } else if (options[item].equals("Cancel")) {
+
+                            dialog.dismiss();
+
+                        }
+
+                    }
+
+                });
+
+                builder.show();
+            }
+
+        });
         profileServices.getMatches("38453441334541372D383043342D343936312D393043422D44kmY4YZwj7fhcouS61swo4239364239464233384433kmY4YZwj7fhcouS61swo",
-                "8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3",2, new CallBack(BaseFragment.this,"GetMatches"));
+                "8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3", 2, new CallBack(BaseFragment.this,"GetMatches"));
 
         // hit for discovery prefrences
         profileServices.getPreferences("8E4A3EA7-80C4-4961-90CB-DB96B9FB38D3",
