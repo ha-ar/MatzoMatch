@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.algorepublic.matzomatch"
         minSdkVersion 19
@@ -32,4 +32,10 @@ dependencies {
     compile project(':circularImageView')
     compile project(':libviewpagerindicator')
     compile 'net.simonvt.menudrawer:menudrawer:3.0+'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.appyvet:materialrangebar:1.3'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
