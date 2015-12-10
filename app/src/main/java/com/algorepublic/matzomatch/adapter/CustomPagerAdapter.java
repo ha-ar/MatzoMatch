@@ -19,7 +19,7 @@ public class CustomPagerAdapter extends PagerAdapter {
     Context mContext;
     AQuery aq;
     LayoutInflater mLayoutInflater;
-    int[] images = {R.drawable.splas1,R.drawable.splash_image_2,R.drawable.splash_image_3};
+    int[] images = {R.drawable.splas1,R.drawable.splas2,R.drawable.splas3};
     ImageView image;
     public CustomPagerAdapter(Context context) {
         mContext = context;

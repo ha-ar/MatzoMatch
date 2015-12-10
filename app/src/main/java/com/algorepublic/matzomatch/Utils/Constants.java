@@ -1,5 +1,7 @@
 package com.algorepublic.matzomatch.Utils;
 
+import com.linkedin.platform.utils.Scope;
+
 /**
  * Created by hasanali on 12/06/2015.
  */
@@ -20,4 +22,20 @@ public class Constants {
     public static final String OAUTH_CALLBACK_HOST = "litestcalback";
     public static final String OAUTH_CALLBACK_URL = OAUTH_CALLBACK_SCHEME
             + "://" + OAUTH_CALLBACK_HOST;
+    //....................................................................//
+    public static final String personByIdBaseUrl = "https://api.linkedin.com/v1/people/id=";
+    public static final String shareBaseUrl = "https://api.linkedin.com/v1/people/~/shares";
+    public static final String personProjection = ":(id,first-name,last-name)";
+    public static final Scope scope = Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
+
+    public static String FirstName = "FirstName";
+    public static String LastName = "LastName";
+    public static String HeadLine = "HeadliNE";
+    public static String Photo = "Picture";
+    public static String Lat = "latitude";
+    public static String Lon = "longitutde";
+    public static String CountryName = "contryName";
+    public static String City = "city";
+
+
 }

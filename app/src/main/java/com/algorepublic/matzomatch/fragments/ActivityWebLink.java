@@ -8,7 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.algorepublic.matzomatch.BaseApplication;
+import com.algorepublic.matzomatch.BaseClass;
 import com.androidquery.AQuery;
 import com.algorepublic.matzomatch.R;
 
@@ -27,10 +27,10 @@ public class ActivityWebLink extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         link = bundle.getString("Key");
         if ( link.equals("privacy")){
-            wv_linker.loadUrl(BaseApplication.privacy);
+            wv_linker.loadUrl(BaseClass.privacy);
         } else
         if (link.equals("terms")){
-            wv_linker.loadUrl(BaseApplication.terms);
+            wv_linker.loadUrl(BaseClass.terms);
         }else {
             wv_linker.loadUrl(link);
         }

@@ -16,7 +16,7 @@
             android:id="@+id/image_1"
             android:background="#d6d6d6"
             android:layout_marginTop="30dp"
-            android:src="@drawable/camera"
+            android:src="@drawable/cameaa"
             android:paddingLeft="25dp"
             android:paddingTop="25dp"
             android:paddingRight="25dp"
@@ -44,7 +44,7 @@
                 android:id="@+id/image_2"
                 android:background="#d6d6d6"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/camera"
+                android:src="@drawable/cameaa"
                 android:layout_gravity="center_horizontal" />
             <ImageView
                 android:layout_width="0dp"
@@ -58,7 +58,7 @@
                 android:id="@+id/image_3"
                 android:background="#d6d6d6"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/camera"
+                android:src="@drawable/cameaa"
                 android:layout_gravity="center_horizontal" />
             <ImageView
                 android:layout_width="0dp"
@@ -72,7 +72,7 @@
                 android:id="@+id/image_4"
                 android:background="#d6d6d6"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/camera"
+                android:src="@drawable/cameaa"
                 android:layout_gravity="center_horizontal" />
             <ImageView
                 android:layout_width="0dp"
@@ -85,13 +85,13 @@
                 android:id="@+id/image_5"
                 android:background="#d6d6d6"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/camera"
+                android:src="@drawable/cameaa"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:textSize="17sp"
+            android:textSize="13sp"
             android:background="#f8f8f8"
             android:text="Choose up to 4 more photos "
             android:gravity="center"
@@ -111,8 +111,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="My Gender"/>
 
             <Button
@@ -158,11 +160,13 @@
                 android:layout_width="0dp"
                 android:layout_height="27dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="30dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="My Name"/>
             <TextView
+                android:id="@+id/name_profile"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -190,9 +194,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="27dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="My Age"/>
             <TextView
                 android:layout_weight="1"
@@ -222,11 +227,13 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="27dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="My Tagline"/>
             <TextView
+                android:id="@+id/headlines_profile"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -254,8 +261,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="My Industry"/>
 
             <TextView
@@ -292,9 +301,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="25dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:textColor="#A8D9F5"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold"
                 android:text="Job"/>
 
             <TextView
@@ -331,9 +341,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="25dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="Job"/>
 
             <TextView
@@ -370,9 +381,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="25dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="School"/>
 
             <TextView
@@ -409,9 +421,10 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:textAlignment="viewStart"
-                android:paddingLeft="25dp"
-                android:textColor="#00bfff"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="15dp"
+                android:textColor="#A8D9F5"
+                android:textStyle="bold"
                 android:text="School"/>
 
             <TextView
@@ -435,6 +448,7 @@
             android:layout_height="1dp"
             android:background="#f1f1f1" />
         <Button
+            android:id="@+id/preview_profile"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:src="@drawable/rectangle_shape"
@@ -442,7 +456,6 @@
             android:layout_marginRight="15dp"
             android:textColor="@android:color/white"
             android:text="Preview My Profile"
-            android:background="@android:color/holo_blue_bright"
             android:layout_marginBottom="10dp"/>
     </LinearLayout>
 </ScrollView>

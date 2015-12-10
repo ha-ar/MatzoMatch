@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
- >
+    >
 
     <RelativeLayout
         android:id="@+id/global_layout"
@@ -72,36 +72,55 @@
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:weightSum="2"
+            android:weightSum="3"
             >
             <ImageView
                 android:id="@+id/imgDisLike"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="Action Image"
                 android:onClick="onClickedView"
                 android:scaleType="center"
-                android:src="@drawable/ic_dislike" />
-
+                android:src="@drawable/cancel" />
 
             <ImageView
-                android:id="@+id/imgLike"
+                android:id="@+id/shareHome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:contentDescription="Action Image"
                 android:onClick="onClickedView"
                 android:scaleType="center"
-                android:src="@drawable/ic_like" />
-            <Button
-                android:id="@+id/button"
-                android:text="temp"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
+                android:layout_gravity="center"
+                android:src="@drawable/shareiconcopy" />
 
+            <ImageView
+                android:id="@+id/imgLike"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="Action Image"
+                android:onClick="onClickedView"
+                android:scaleType="center"
+                android:src="@drawable/checkmarktrue1" />
+
+            <ImageView
+                android:id="@+id/share"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="Action Image"
+                android:onClick="onClickedView"
+                android:scaleType="center"
+                android:src="@drawable/like" />
         </LinearLayout>
 
     </RelativeLayout>
