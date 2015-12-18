@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,12 @@ public class FragmentEventDetails extends Fragment {
         text = txt;
         ticketUrl = tktUrl;
         date = Dte;
+       Log.e("TAG",location);
+        Log.e("TAG",longitude);
+        Log.e("TAG",longitude);
+        Log.e("TAG",text);
+        Log.e("TAG",ticketUrl);
+        Log.e("TAG",date);
         return fragmentEventDetails;
     }
 

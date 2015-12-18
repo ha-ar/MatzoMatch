@@ -49,8 +49,7 @@
                     android:layout_height="96dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/splash_background"
-                    app:civ_border_width="2dp"
+                                 app:civ_border_width="2dp"
                     app:civ_border_color="#FF000000"/>
             </com.skyfishjy.library.RippleBackground>
 
