@@ -44,7 +44,7 @@ public class DiscoveryPreferences extends Fragment {
     View view;
     AQuery aq;
     public TinyDB tinyDB;
-    public Switch man,woman;
+    public Switch man,woman,both;
     ProfileServices profileServices;
     ProgressDialog pd;
 
@@ -72,6 +72,7 @@ public class DiscoveryPreferences extends Fragment {
         textView2 = (TextView) view.findViewById(R.id.textView1);
         man = (Switch) view.findViewById(R.id.man);
         woman = (Switch) view.findViewById(R.id.woman);
+        both = (Switch) view.findViewById(R.id.both);
         aq = new AQuery(view);
         profileServices = new ProfileServices(getActivity(),view);
         pd = new ProgressDialog(getActivity());
@@ -81,9 +82,16 @@ public class DiscoveryPreferences extends Fragment {
             if (tinyDB.getString(Constants.PREF_GENDER).equals("1")) {
                 man.setChecked(true);
                 woman.setChecked(false);
+                both.setChecked(false);
             } else {
                 man.setChecked(false);
                 woman.setChecked(true);
+                both.setChecked(false);
+            }
+            if (tinyDB.getString(Constants.PREF_GENDER).equals("3")){
+                man.setChecked(false);
+                woman.setChecked(false);
+                both.setChecked(true);
             }
         }
         if (!tinyDB.getString(Constants.DISTANCE).equals("")){
@@ -122,7 +130,7 @@ public class DiscoveryPreferences extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     man.setChecked(true);
-                    tinyDB.putString(Constants.USER_GENDER,"1");
+                    tinyDB.putString(Constants.PREF_GENDER, "1");
                     woman.setChecked(false);
                 } else {
                     man.setChecked(false);
@@ -134,10 +142,24 @@ public class DiscoveryPreferences extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     woman.setChecked(true);
-                    tinyDB.putString(Constants.USER_GENDER,"2");
+                    tinyDB.putString(Constants.PREF_GENDER, "2");
                     man.setChecked(false);
-                }else {
+                } else {
                     woman.setChecked(false);
+                }
+            }
+        });
+        both.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+
+                    man.setChecked(false);
+                    woman.setChecked(false);
+                    both.setChecked(true);
+                    tinyDB.putString(Constants.PREF_GENDER,"3");
+                } else {
+                    both.setChecked(false);
                 }
             }
         });

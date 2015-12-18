@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 
@@ -36,8 +37,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
-public class SplashScreen extends AppCompatActivity implements View.OnClickListener{
+public class SplashScreen extends AppCompatActivity implements View.OnClickListener {
 
     AQuery aq;
     CirclePageIndicator circlePageIndicator;
@@ -62,25 +64,24 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         aq.id(R.id.sign_in).clicked(this);
         aq.id(R.id.matzo_logo).animate(R.anim.top_to_center);
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.circularIndicator);
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         adapter = new CustomPagerAdapter(this);
         tinyDB = new TinyDB(SplashScreen.this);
         pager.setAdapter(adapter);
         circlePageIndicator.setViewPager(pager);
-        timer = new MyTimer(3000,3000);
+        timer = new MyTimer(3000, 3000);
         timer.start();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        try{
+        try {
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             lat = location.getLatitude();
             lon = location.getLongitude();
-            tinyDB.putDouble(Constants.Lat,lat);
-            tinyDB.putDouble(Constants.Lon,lon);
+            tinyDB.putDouble(Constants.Lat, lat);
+            tinyDB.putDouble(Constants.Lon, lon);
             LatLng latLng = new LatLng(lat, lon);
             Log.e("latlongs", latLng + "this");
-        } catch (SecurityException e){
-
-        }
+        } catch (SecurityException e) {
+        } catch (Exception e){ }
         Geocoder gcd = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
         try {
@@ -88,37 +89,46 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (addresses.size() > 0)
-        {
-            Log.e("LAT",addresses.get(0).getCountryName());
-            Log.e("LAT",addresses.get(0).getLocality());
+        if (addresses.size() > 0) {
+            Log.e("LAT", addresses.get(0).getCountryName());
+            Log.e("LAT", addresses.get(0).getLocality());
             tinyDB.putString(Constants.CountryName, addresses.get(0).getCountryName());
-            tinyDB.putString(Constants.City,addresses.get(0).getLocality());
+            tinyDB.putString(Constants.City, addresses.get(0).getLocality());
         }
-        position=0;
-        setUpdateState();
+        final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+
+        final String tmDevice, tmSerial, androidId;
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        String deviceId = deviceUuid.toString();
+        Log.e("ANDROID ID", deviceId);
+        position = 0;
+//        setUpdateState();
     }
 
     private static Scope buildScope() {
-        return Scope.build(Scope.R_FULLPROFILE, Scope.W_SHARE);
+        return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.sign_in:
-
+                startActivity(new Intent(SplashScreen.this, MainActivity.class));
                 LISessionManager.getInstance(getApplicationContext()).init(SplashScreen.this, buildScope(), new AuthListener() {
                     @Override
                     public void onAuthSuccess() {
-                        startActivity(new Intent(SplashScreen.this,MainActivity.class));
+                        startActivity(new Intent(SplashScreen.this, MainActivity.class));
                     }
 
 
                     //
                     @Override
                     public void onAuthError(LIAuthError error) {
-                        Log.e("TAG","onAuthError");
+                        Log.e("TAG", "onAuthError");
                         Log.e("Error", error.toString());
                         // Handle authentication errors
                     }
@@ -130,7 +140,6 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.e("TAG", "onActivityResult");
@@ -139,28 +148,25 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public class MyTimer extends CountDownTimer
-    {
+    public class MyTimer extends CountDownTimer {
 
-        public MyTimer(long startTime, long interval)
-        {
+        public MyTimer(long startTime, long interval) {
             super(startTime, interval);
         }
+
         @Override
-        public void onFinish()
-        {
-            if(position==3)
-            {
-                position=0;
+        public void onFinish() {
+            if (position == 3) {
+                position = 0;
             }
             pager.setCurrentItem(position);
             pager.setAnimationCacheEnabled(true);
             position++;
             timer.start();
         }
+
         @Override
-        public void onTick(long millisUntilFinished)
-        {
+        public void onTick(long millisUntilFinished) {
         }
     }
 
@@ -176,7 +182,7 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         if (accessTokenValid) {
 //            String url = Constants.personByIdBaseUrl + "P0B0FP6TSt" + Constants.personProjection;
 
-            String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,pictureUrl)";
+            String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,positions,num-connections,headline,pictureUrl)";
             APIHelper.getInstance(this).getRequest(this, url, new ApiListener() {
 
                 @Override
@@ -186,10 +192,10 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
                     try {
                         Log.e("name:", "" + apiResponse.getResponseDataAsJson().get("firstName").toString());
                         tinyDB.putString(Constants.FirstName, apiResponse.getResponseDataAsJson().get("firstName").toString());
-                        tinyDB.putString(Constants.LastName,apiResponse.getResponseDataAsJson().get("lastName").toString());
-                        tinyDB.putString(Constants.HeadLine,apiResponse.getResponseDataAsJson().get("headline").toString());
-                        tinyDB.putString(Constants.Photo,apiResponse.getResponseDataAsJson().get("pictureUrl").toString());
-                    }catch (Exception e){
+                        tinyDB.putString(Constants.LastName, apiResponse.getResponseDataAsJson().get("lastName").toString());
+                        tinyDB.putString(Constants.HeadLine, apiResponse.getResponseDataAsJson().get("headline").toString());
+                        tinyDB.putString(Constants.Photo, apiResponse.getResponseDataAsJson().get("pictureUrl").toString());
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     try {
@@ -199,11 +205,11 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
                         JSONObject location = s.getJSONObject("location");
                         String locationName = location != null && location.has("name") ? location.getString("name") : "";
 
-                        Log.e("accessTokenValid1111111", locationName + "/" + headline +"/ "+ pictureUrl);
+                        Log.e("accessTokenValid1111111", locationName + "/" + headline + "/ " + pictureUrl);
                         if (pictureUrl != null) {
-                            //new FetchImageTask(attendeeImageView).execute(pictureUrl);
+//                            new FetchImageTask(attendeeImageView).execute(pictureUrl);
                         } else {
-                            //attendeeImageView.setImageResource(R.drawable.ghost_person);
+//                            attendeeImageView.setImageResource(R.drawable.ghost_person);
                         }
                     } catch (JSONException e) {
 
@@ -213,7 +219,7 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onApiError(LIApiError apiError) {
-                    Log.e("accessTokenValid",  "/"+apiError.toString() );
+                    Log.e("accessTokenValid", "/" + apiError.toString());
                 }
             });
 

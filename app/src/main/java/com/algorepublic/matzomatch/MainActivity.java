@@ -20,6 +20,7 @@ import com.algorepublic.matzomatch.fragments.BaseFragment;
 import com.algorepublic.matzomatch.fragments.BuyMessages;
 import com.algorepublic.matzomatch.fragments.DiscoveryPreferences;
 import com.algorepublic.matzomatch.fragments.FragmentEventList;
+import com.algorepublic.matzomatch.fragments.FragmentPeopleWhoLikesYou;
 import com.algorepublic.matzomatch.fragments.MyProfile;
 import com.androidquery.AQuery;
 
@@ -103,7 +104,15 @@ public class MainActivity extends BaseActivity
                 getSupportFragmentManager().beginTransaction().
                         replace(R.id.container, DiscoveryPreferences.newInstance())
                         .commit();
+            }
+        });
 
+        aq.id(R.id.seeWhoLikeYou).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().
+                        replace(R.id.container, FragmentPeopleWhoLikesYou.newInstance())
+                        .commit();
             }
         });
 
@@ -122,7 +131,7 @@ public class MainActivity extends BaseActivity
         aq.id(R.id.calander).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, new FragmentEventList()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new FragmentEventList()).commit();
             }
         });
 

@@ -53,10 +53,10 @@ public class FragmentEventDetails extends Fragment {
             }
         });
 
-        aq.id(R.id.address).clicked(new View.OnClickListener() {
+        aq.id(R.id.layout_address).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getFragmentManager().beginTransaction().replace(R.id.container,FragmentMap.newInstance(latitude,longitude)).commit();
             }
         });
 

@@ -209,6 +209,16 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             />
+        <Switch
+            android:id="@+id/both"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Man"
+            android:textSize="17sp"
+            android:textColor="#d6d6d6"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            />
     </LinearLayout>
 
     <LinearLayout

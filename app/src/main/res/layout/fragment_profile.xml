@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:orientation="vertical"
+        android:background="#D4D5D6"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".9"
+            android:id="@+id/layout_image"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/person_image"
+                android:background="@android:color/transparent"
+                />
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="#BB000000"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="3dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=", "
+                        android:layout_marginTop="3dp"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/age"
+                        android:layout_marginTop="3dp"
+                        android:text="21"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:textColor="@android:color/white"
+                        />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1"
+        android:id="@+id/layout_profile_details"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:weightSum="3"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight=".01"
+            android:layout_height="match_parent"
+            android:background="#D4D5D6"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            >
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.9"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+
+</RelativeLayout>

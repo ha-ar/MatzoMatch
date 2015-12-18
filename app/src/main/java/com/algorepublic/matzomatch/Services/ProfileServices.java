@@ -9,6 +9,7 @@ import com.algorepublic.matzomatch.Utils.Constants;
 import com.algorepublic.matzomatch.model.LikesDislikesModel;
 import com.algorepublic.matzomatch.model.MatchModel;
 import com.algorepublic.matzomatch.model.ModelPreferences;
+import com.algorepublic.matzomatch.model.PeopleWhoLikesYouModel;
 
 import java.util.HashMap;
 
@@ -48,6 +49,16 @@ public class ProfileServices extends BaseService {
         params.put("ent_sess_token",token);
         Log.e("Url", Url);
         this.post(Url, params, obj, ModelPreferences.getObj(),true);
+    }
+
+    public void getPeopleWhoLikesYou(String token,String deviceId,int recentLIkes,CallBack obj){
+        String Url = Constants.BASE_URL+"findMatches";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("ent_sess_token", token);
+        params.put("ent_dev_id",deviceId);
+        params.put("ent_Rec_like", String.valueOf(recentLIkes));
+        Log.e("Url", Url);
+        this.post(Url, params, obj, PeopleWhoLikesYouModel.getInstance(), true);
     }
 
     public void updatePreferences(String deviceID,String token,String userGender,String lowerAge,String prefGender,

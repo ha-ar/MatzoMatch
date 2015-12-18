@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.algorepublic.matzomatch.R;
 import com.algorepublic.matzomatch.model.EventModelDetails;
 import com.androidquery.AQuery;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -69,6 +71,7 @@ public class AdapterEventList extends BaseAdapter {
             view = inflater.inflate(R.layout.event_rows,null);
             holder = new ViewHolder();
             holder.address = (TextView) view.findViewById(R.id.event_address);
+            holder.imageView = (ImageView) view.findViewById(R.id.event_image);
             holder.day = (TextView) view.findViewById(R.id.days);
             holder.hour = (TextView) view.findViewById(R.id.hours);
             holder.min = (TextView) view.findViewById(R.id.min);
@@ -82,7 +85,8 @@ public class AdapterEventList extends BaseAdapter {
         aQuery = new AQuery(view);
         Log.e("address", arrayList.get(position).getNameText());
         holder.address.setText(arrayList.get(position).getNameText());
-        aq.id(R.id.event_image).image(arrayList.get(position).getLogoUrl());
+        Picasso.with(ctx).load(arrayList.get(position).getLogoUrl()).into(holder.imageView);
+//        aq.id(R.id.event_image).image(arrayList.get(position).getLogoUrl());
         Log.e("time log",arrayList.get(position).getStartUtu()+"");
         startUpdateTimer(holder, arrayList.get(position).getStartUtu());
 //        long millisSinceUnixEpoch = new DateTime( "2014-10-23T00:35:14.800Z" ).getMillis();
@@ -121,6 +125,7 @@ public class AdapterEventList extends BaseAdapter {
     static class ViewHolder{
         TextView address;
         TextView day,hour,min,sec;
+        ImageView imageView;
         EventModelDetails eventModelDetails;
 
         public void setData(EventModelDetails item) {
