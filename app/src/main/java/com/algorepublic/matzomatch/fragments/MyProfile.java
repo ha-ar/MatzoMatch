@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.algorepublic.matzomatch.R;
+import com.algorepublic.matzomatch.Services.LoginService;
 import com.algorepublic.matzomatch.Utils.Constants;
 import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.androidquery.AQuery;
@@ -29,6 +30,7 @@ public class MyProfile extends Fragment {
     static final int ACTION_PICK = 3;
     private AQuery aq;
     TinyDB tinyDB;
+
     public static MyProfile newInstance() {
         return new MyProfile();
     }
@@ -42,6 +44,7 @@ public class MyProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_myprofile,container,false);
         aq = new AQuery(getActivity(), view);
+
         tinyDB = new TinyDB(getActivity());
         final Button manB = (Button)view.findViewById(R.id.man);
         final Button femaleB=(Button)view.findViewById(R.id.women);

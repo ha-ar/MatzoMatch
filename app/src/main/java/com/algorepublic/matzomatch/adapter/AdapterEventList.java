@@ -2,7 +2,6 @@ package com.algorepublic.matzomatch.adapter;
 
 import android.content.Context;
 import android.os.Handler;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +13,8 @@ import com.algorepublic.matzomatch.R;
 import com.algorepublic.matzomatch.model.EventModelDetails;
 import com.androidquery.AQuery;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -123,11 +115,11 @@ public class AdapterEventList extends BaseAdapter {
         TextView day,hour,min,sec;
         EventModelDetails eventModelDetails;
 
-        public void setData(EventModelDetails item) {
-            eventModelDetails = item;
-//            tvProduct.setText(item.name);
-            updateTimeRemaining(System.currentTimeMillis());
-        }
+//        public void setData(EventModelDetails item) {
+//            eventModelDetails = item;
+////            tvProduct.setText(item.name);
+//            updateTimeRemaining(System.currentTimeMillis());
+//        }
 
         public void updateTimeRemaining(long currentTime) {
             long timeDiff = timeStamp - currentTime;

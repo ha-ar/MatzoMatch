@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.algorepublic.matzomatch.R;
@@ -39,6 +38,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by waqas on 12/7/15.
  */
@@ -55,6 +56,7 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
     public ArrayList<MatchModelDetails> arrayList;
     public RelativeLayout relativeLayout;
     public TinyDB tinyDB;
+    CircleImageView circleImageView;
 
     public static BaseFragment newInstance() {
         BaseFragment fragment = new BaseFragment();
@@ -66,9 +68,11 @@ public class BaseFragment extends Fragment implements SwipeView.OnCardSwipedList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_main, container, false);
         aq = new AQuery(getActivity(),view);
+
         al = new ArrayList<SwipModel>();
         arrayList = new ArrayList<>();
         tinyDB = new TinyDB(getActivity());
+        aq.id(R.id.profile_image).image(tinyDB.getString(Constants.Photo));
         profileServices = new ProfileServices(getActivity(),view);
         contentLayout = (FrameLayout) view.findViewById(R.id.frame);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.layout_search);

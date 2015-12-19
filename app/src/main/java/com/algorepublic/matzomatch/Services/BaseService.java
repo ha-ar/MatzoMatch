@@ -34,6 +34,7 @@ public class BaseService {
     ProgressBar progressBar;
 
     public BaseService(Activity act) {
+        aq = new AQuery(act);
         context = act;
     }
     public BaseService(Activity act, View view) {
