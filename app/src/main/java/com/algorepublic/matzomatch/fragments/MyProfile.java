@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.algorepublic.matzomatch.R;
-import com.algorepublic.matzomatch.Services.LoginService;
 import com.algorepublic.matzomatch.Utils.Constants;
 import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.androidquery.AQuery;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by waqas on 12/7/15.
@@ -50,7 +51,16 @@ public class MyProfile extends Fragment {
         final Button femaleB=(Button)view.findViewById(R.id.women);
         final Button previewSubmit=(Button)view.findViewById(R.id.preview_profile);
         previewSubmit.setBackgroundColor(getContext().getResources().getColor(R.color.default_underline_indicator_selected_color));
-
+        aq.id(R.id.image_1).image(tinyDB.getString(Constants.Photo));
+        String text = tinyDB.getString(Constants.Photo);
+        Log.e("Imagebae64 ",text);
+        try {
+            byte[] data = text.getBytes("UTF-8");
+            String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+            Log.e("Image bae 64 ",base64);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         aq.id(R.id.headlines_profile).text(tinyDB.getString(Constants.HeadLine));
         aq.id(R.id.name_profile).text(tinyDB.getString(Constants.FirstName));
         aq.id(R.id.image_1).clicked(new View.OnClickListener() {

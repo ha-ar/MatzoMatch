@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.algorepublic.matzomatch.Services.CallBack;
 import com.algorepublic.matzomatch.Services.LoginService;
@@ -21,6 +22,7 @@ import com.algorepublic.matzomatch.Utils.TinyDB;
 import com.algorepublic.matzomatch.adapter.CustomPagerAdapter;
 import com.algorepublic.matzomatch.model.LoginModel;
 import com.androidquery.AQuery;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISession;
@@ -55,6 +57,8 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
     double lon;
     double lat;
     private LoginService obj;
+    //    private Timer timers;
+    ImageView imageView;
 //    private LIOauthService oAuthService;
 
     @Override
@@ -66,7 +70,32 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         obj = new LoginService(this);
 
         aq.id(R.id.sign_in).clicked(this);
-        aq.id(R.id.matzo_logo).animate(R.anim.top_to_center);
+//        aq.id(R.id.matzo_logo).animate(R.anim.top_to_center);
+        imageView= (ImageView) findViewById(R.id.matzo_logo);
+        Glide.with(SplashScreen.this).load(R.drawable.output).asGif().into(imageView);
+        aq.id(R.id.circularIndicator).visibility(View.GONE);
+        aq.id(R.id.pager).visibility(View.GONE);
+        aq.id(R.id.sign_in).visibility(View.GONE);
+
+        new CountDownTimer(5500, 5500) { // adjust the milli seconds here
+
+            public void onTick(long millisUntilFinished) {
+
+
+            }
+
+            @Override
+            public void onFinish() {
+                aq.id(R.id.matzo_logo).visibility(View.GONE);
+                aq.id(R.id.circularIndicator).visibility(View.VISIBLE);
+                aq.id(R.id.pager).visibility(View.VISIBLE);
+                aq.id(R.id.sign_in).visibility(View.VISIBLE);
+            }
+
+        }.start();
+
+//            timers=new Timer(1000,1000);
+//        timers.start();
         circlePageIndicator = (CirclePageIndicator) findViewById(R.id.circularIndicator);
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new CustomPagerAdapter(this);
@@ -74,7 +103,7 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
 
         Log.e("TAGtinyDB",tinyDB.getString(Constants.LoginAppToken).toString());
         if (!tinyDB.getString(Constants.LoginAppToken).isEmpty()){
-         Log.e("TAGtinyDB",tinyDB.getString(Constants.LoginAppToken).toString());
+            Log.e("TAGtinyDB",tinyDB.getString(Constants.LoginAppToken).toString());
             startActivity(new Intent(SplashScreen.this, MainActivity.class));
         }
         pager.setAdapter(adapter);
@@ -99,12 +128,12 @@ public class SplashScreen extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (addresses.size() > 0) {
-            Log.e("LAT", addresses.get(0).getCountryName());
-            Log.e("LAT", addresses.get(0).getLocality());
-            tinyDB.putString(Constants.CountryName, addresses.get(0).getCountryName());
-            tinyDB.putString(Constants.City, addresses.get(0).getLocality());
-        }
+//        if (addresses.size() > 0) {
+        Log.e("LAT", addresses.get(0).getCountryName());
+        Log.e("LAT", addresses.get(0).getLocality());
+        tinyDB.putString(Constants.CountryName, addresses.get(0).getCountryName());
+        tinyDB.putString(Constants.City, addresses.get(0).getLocality());
+//        }
         final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
 
         final String tmDevice, tmSerial, androidId;
